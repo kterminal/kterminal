@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(UsingFrameworksTutorial)
 
-find_package(KF5Archive REQUIRED)
+find_package(KF5Archive 5.15 REQUIRED)
 
 set(tutorial_SRCS
     main.cpp
