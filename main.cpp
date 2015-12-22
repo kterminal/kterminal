@@ -1,11 +1,10 @@
-#include <iostream>
-
-#include <my_lib.h>
-
-int main(int, char**) {
-    std::cout << "hello world" << std::endl;
-    MyClass mc;
-    mc.intro();
+#include <QCoreApplication>
+#include <KCompressionDevice>
+int main(int argc, char**argv) {
+     QCoreApplication qapp(argc, argv);
+    KCompressionDevice dev("test.gz", KCompressionDevice::GZip);
+    dev.open(QIODevice::WriteOnly);
+    dev.write("Hello world!\n");
+    dev.close();
     return 0;
 }
-
