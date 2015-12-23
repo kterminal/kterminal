@@ -1,10 +1,10 @@
-#include <QCoreApplication>
-#include <KCompressionDevice>
-int main(int argc, char**argv) {
-     QCoreApplication qapp(argc, argv);
-    KCompressionDevice dev("test.gz", KCompressionDevice::GZip);
-    dev.open(QIODevice::WriteOnly);
-    dev.write("Hello world!\n");
-    dev.close();
-    return 0;
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QLabel>
+
+int main(int argc, char *argv[])
+{
+    QApplication app(argc, argv);
+    QLabel *label = new QLabel("Hello Qt!");
+    label->show();
+    return app.exec();
 }
