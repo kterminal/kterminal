@@ -29,11 +29,38 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
 # Find the QtWidgets library
-find_package(Qt5Widgets)
+find_package(
+    Qt5Widgets
+)
+find_package(
+    KF5Parts
+)
 
 # Tell CMake to create the helloworld executable
-add_executable(helloworld main.cpp)
+add_executable(
+    helloworld
+    main.cpp
+    #sessionstack.cpp
+    #session.cpp
+    #splitter.cpp
+    #terminal.cpp
+)
 
 # Use the Widgets module from Qt 5.
-target_link_libraries(helloworld Qt5::Widgets)
+target_link_libraries(
+    helloworld
+    Qt5::Widgets
+    KF5::Parts
+)
+include_directories(
+    headers
+)
 
+include_directories(${YOUR_DIRECTORY})
+#set(HEADER_FILES
+#    ${YOUR_DIRECTORY}headers/session.h
+#    ${YOUR_DIRECTORY}headers/splitter.h
+#    ${YOUR_DIRECTORY}headers/terminal.h
+#)
+#add_library(mylib ${HEADER_FILES})
+#add_executable(myexec ${HEADER_FILES})
