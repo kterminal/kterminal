@@ -8,9 +8,20 @@ set(CMAKE_AUTOMOC ON)
 
 # Find the QtWidgets library
 find_package(Qt5Widgets)
+find_package(KF5Parts)
 
 # Tell CMake to create the helloworld executable
-add_executable(helloworld main.cpp mainwindow.cpp)
+add_executable(helloworld
+    main.cpp
+    mainwindow.cpp
+    terminal.cpp
+    visualeventoverlay.cpp
+    sessionstack.cpp
+)
 
 # Use the Widgets module from Qt 5.
-target_link_libraries(helloworld Qt5::Widgets)
+target_link_libraries(
+    helloworld
+    Qt5::Widgets
+    KF5::Parts
+)

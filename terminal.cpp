@@ -20,14 +20,14 @@
 
 
 #include "terminal.h"
-#include "settings.h"
+//#include "settings.h"
 
 #include <KActionCollection>
-#include <KApplication>
+#include <QApplication>
 #include <KColorScheme>
 #include <kde_terminal_interface.h>
 #include <KLocalizedString>
-#include <KIcon>
+#include <QIcon>
 #include <KPluginFactory>
 #include <KPluginLoader>
 //#include <KService>
@@ -171,7 +171,7 @@ void Terminal::displayKPartLoadError()
 
     QLabel* icon = new QLabel(widget);
     icon->setMargin(10);
-    icon->setPixmap(KIcon("dialog-warning").pixmap(QSize(48, 48)));
+    icon->setPixmap(QIcon("dialog-warning").pixmap(QSize(48, 48)));
     icon->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 
     QHBoxLayout* layout = new QHBoxLayout(widget);
@@ -238,13 +238,13 @@ void Terminal::runCommand(const QString& command)
 void Terminal::manageProfiles()
 {
     QMetaObject::invokeMethod(m_part, "showManageProfilesDialog",
-        Qt::QueuedConnection, Q_ARG(QWidget*, KApplication::activeWindow()));
+        Qt::QueuedConnection, Q_ARG(QWidget*, QApplication::activeWindow()));
 }
 
 void Terminal::editProfile()
 {
     QMetaObject::invokeMethod(m_part, "showEditCurrentProfileDialog",
-        Qt::QueuedConnection, Q_ARG(QWidget*, KApplication::activeWindow()));
+        Qt::QueuedConnection, Q_ARG(QWidget*, QApplication::activeWindow()));
 }
 
 void Terminal::overrideShortcut(QKeyEvent* /* event */, bool& override)

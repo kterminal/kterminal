@@ -1,4 +1,4 @@
-c/*
+/*
   Copyright (C) 2008-2009 by Eike Hein <hein@kde.org>
   Copyright (C) 2009 by Juan Carlos Torres <carlosdgtorres@gmail.com>
 
@@ -21,7 +21,7 @@ c/*
 
 
 #include "sessionstack.h"
-#include "settings.h"
+//#include "settings.h"
 #include "visualeventoverlay.h"
 
 #include <KMessageBox>

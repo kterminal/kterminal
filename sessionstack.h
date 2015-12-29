@@ -24,7 +24,7 @@
 #define SESSIONSTACK_H
 
 
-#include "session.h"
+//#include "session.h"
 
 
 #include <QHash>
