@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QWidget>
-#include <QPushButton>
+#include "sessionstack.h"
 
 
 class MainWindow : public QWidget {
@@ -11,7 +11,7 @@ class MainWindow : public QWidget {
     public:
         explicit MainWindow(QWidget *parent = 0);
     private:
-        QPushButton *m_button;
+        SessionStack *m_sessionStack;
 };
 
 #endif

@@ -1,9 +1,8 @@
 #include "mainwindow.h"
+#include "sessionstack.h"
 
-class Button;
+class SessionStack;
 
 MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
-    setFixedSize(300, 300);
-    QPushButton *button = new QPushButton("yo button", this);
-    button->setGeometry(10, 10, 80, 30);
+    m_sessionStack = new SessionStack(this);
 }
