@@ -10,6 +10,11 @@ class MainWindow : public QWidget {
 
     public:
         explicit MainWindow(QWidget *parent = 0);
+
+    public slots:
+        void handleTerminalActivity(Terminal* terminal);
+        void handleTerminalSilence(Terminal* terminal);
+
     private:
         SessionStack *m_sessionStack;
 };
