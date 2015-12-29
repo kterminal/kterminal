@@ -23,7 +23,7 @@
 #include "mainwindow.h"
 
 
-Application::Application() : KUniqueApplication()
+Application::Application() : QApplication()
 {
     m_mainWindow = 0;
 }
@@ -34,14 +34,6 @@ Application::~Application()
 
 int Application::newInstance()
 {
-    if (!m_mainWindow)
-    {
-        m_mainWindow = new MainWindow();
-
-        m_mainWindow->hide();
-    }
-    else
-        m_mainWindow->toggleWindowState();
-
+    //m_mainWindow = new MainWindow();
     return 0;
 }

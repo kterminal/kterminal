@@ -58,15 +58,6 @@ int main (int argc, char *argv[])
 
     KCmdLineArgs::init(argc, argv, &aboutData);
 
-    if (!KUniqueApplication::start())
-    {
-        QTextStream err(stderr);
-
-        err << i18nc("@info:shell", "Yakuake is already running, toggling window ...") << '\n';
-
-        return 0;
-    }
-
     Application app;
 
     return app.exec();

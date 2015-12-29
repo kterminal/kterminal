@@ -23,13 +23,13 @@
 #define APPLICATION_H
 
 
-#include <KUniqueApplication>
+#include <QApplication>
 
 
 class MainWindow;
 
 
-class Application : public KUniqueApplication
+class Application : public QApplication
 {
     Q_OBJECT
 
