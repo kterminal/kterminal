@@ -15,6 +15,9 @@ class MainWindow : public QWidget {
         void handleTerminalActivity(Terminal* terminal);
         void handleTerminalSilence(Terminal* terminal);
 
+    signals:
+        void windowClosed();
+
     private:
         SessionStack *m_sessionStack;
 };
