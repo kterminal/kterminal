@@ -93,8 +93,8 @@ VisualEventOverlay::~VisualEventOverlay()
 
 void VisualEventOverlay::highlightTerminal(Terminal* terminal, bool persistent)
 {
-    if (!persistent && Settings::terminalHighlightDuration() == 0)
-        return;
+    //if (!persistent && Settings::terminalHighlightDuration() == 0)
+    //    return;
 
     if (isHidden()) show();
 
@@ -103,8 +103,8 @@ void VisualEventOverlay::highlightTerminal(Terminal* terminal, bool persistent)
 
     terminalEvent(terminal, EventRect::TerminalHighlight, flags);
 
-    if (!persistent)
-        scheduleCleanup(Settings::terminalHighlightDuration());
+    //if (!persistent)
+    //    scheduleCleanup(Settings::terminalHighlightDuration());
 }
 
 void VisualEventOverlay::removeTerminalHighlight()
@@ -127,12 +127,12 @@ void VisualEventOverlay::removeTerminalHighlight()
 
 void VisualEventOverlay::indicateKeyboardInputBlocked(Terminal* terminal)
 {
-    if (Settings::keyboardInputBlockIndicatorDuration() == 0)
-        return;
+    //if (Settings::keyboardInputBlockIndicatorDuration() == 0)
+    //    return;
 
     terminalEvent(terminal, EventRect::KeyboardInputBlocked);
 
-    scheduleCleanup(Settings::keyboardInputBlockIndicatorDuration());
+    //scheduleCleanup(Settings::keyboardInputBlockIndicatorDuration());
 }
 
 void VisualEventOverlay::terminalEvent(Terminal* terminal, EventRect::EventType type, EventRect::EventFlags flags)
@@ -170,27 +170,27 @@ void VisualEventOverlay::paintEvent(QPaintEvent*)
 
         painted = false;
 
-        if (eventRect.eventType() == EventRect::TerminalHighlight
-            && (eventRect.timeStamp().msecsTo(m_time) <= Settings::terminalHighlightDuration()
-            || eventRect.testFlag(EventRect::Persistent)))
-        {
-            KStatefulBrush terminalHighlightBrush(KColorScheme::View, KColorScheme::HoverColor);
+        //if (eventRect.eventType() == EventRect::TerminalHighlight
+        //    && (eventRect.timeStamp().msecsTo(m_time) <= Settings::terminalHighlightDuration()
+        //    || eventRect.testFlag(EventRect::Persistent)))
+        //{
+        //    KStatefulBrush terminalHighlightBrush(KColorScheme::View, KColorScheme::HoverColor);
 
-            painter.setOpacity(Settings::terminalHighlightOpacity());
+        //    painter.setOpacity(Settings::terminalHighlightOpacity());
 
-            painter.fillRect(eventRect, terminalHighlightBrush.brush(this));
+        //    painter.fillRect(eventRect, terminalHighlightBrush.brush(this));
 
-            painted = true;
-        }
-        else if (eventRect.eventType() == EventRect::KeyboardInputBlocked
-            && eventRect.timeStamp().msecsTo(m_time) <= Settings::keyboardInputBlockIndicatorDuration())
-        {
-            painter.setOpacity(Settings::keyboardInputBlockIndicatorOpacity());
+        //    painted = true;
+        //}
+        //else if (eventRect.eventType() == EventRect::KeyboardInputBlocked
+        //    && eventRect.timeStamp().msecsTo(m_time) <= Settings::keyboardInputBlockIndicatorDuration())
+        //{
+        //    painter.setOpacity(Settings::keyboardInputBlockIndicatorOpacity());
 
-            painter.fillRect(eventRect, Settings::keyboardInputBlockIndicatorColor());
+        //    painter.fillRect(eventRect, Settings::keyboardInputBlockIndicatorColor());
 
-            painted = true;
-        }
+        //    painted = true;
+        //}
 
         if (painted && i.hasNext() && eventRect.testFlag(EventRect::Exclusive))
         {
@@ -240,17 +240,17 @@ void VisualEventOverlay::cleanupOverlay()
         {
             const EventRect& eventRect = i.next();
 
-            if (eventRect.eventType() == EventRect::TerminalHighlight
-                && eventRect.timeStamp().msecsTo(m_time) >= Settings::terminalHighlightDuration()
-                && !eventRect.testFlag(EventRect::Persistent))
-            {
-                i.remove();
-            }
-            else if (eventRect.eventType() == EventRect::KeyboardInputBlocked
-                && eventRect.timeStamp().msecsTo(m_time) >= Settings::keyboardInputBlockIndicatorDuration())
-            {
-                i.remove();
-            }
+            //if (eventRect.eventType() == EventRect::TerminalHighlight
+            //    && eventRect.timeStamp().msecsTo(m_time) >= Settings::terminalHighlightDuration()
+            //    && !eventRect.testFlag(EventRect::Persistent))
+            //{
+            //    i.remove();
+            //}
+            //else if (eventRect.eventType() == EventRect::KeyboardInputBlocked
+            //    && eventRect.timeStamp().msecsTo(m_time) >= Settings::keyboardInputBlockIndicatorDuration())
+            //{
+            //    i.remove();
+            //}
         }
     }
 

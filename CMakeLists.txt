@@ -16,6 +16,8 @@ add_executable(helloworld
     mainwindow.cpp
     terminal.cpp
     visualeventoverlay.cpp
+    splitter.cpp
+    session.cpp
     sessionstack.cpp
 )
 

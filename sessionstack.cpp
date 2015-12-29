@@ -59,10 +59,10 @@ int SessionStack::addSession(Session::SessionType type)
 
     m_sessions.insert(session->id(), session);
 
-    if (Settings::dynamicTabTitles())
-        emit sessionAdded(session->id(), session->title());
-    else
-        emit sessionAdded(session->id());
+    //if (Settings::dynamicTabTitles())
+    //    emit sessionAdded(session->id(), session->title());
+    //else
+    //    emit sessionAdded(session->id());
 
     return session->id();
 }
@@ -596,8 +596,8 @@ void SessionStack::handleTerminalHighlightRequest(int terminalId)
 
 void SessionStack::handleManualTerminalActivation(Terminal* terminal)
 {
-    if (!Settings::terminalHighlightOnManualActivation())
-        return;
+    //if (!Settings::terminalHighlightOnManualActivation())
+    //    return;
 
     Session* session = qobject_cast<Session*>(QObject::sender());
 
