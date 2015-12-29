@@ -29,8 +29,8 @@
 #include <KLocalizedString>
 #include <QIcon>
 #include <KPluginFactory>
-//#include <KPluginLoader>
-//#include <KService>
+#include <KPluginLoader>
+#include <KService>
 //#include <KUser>
 
 #include <QAction>
@@ -60,11 +60,11 @@ Terminal::Terminal(QWidget* parent) : QObject(parent)
     m_parentSplitter = parent;
 
     KPluginFactory* factory = 0;
-    //KService::Ptr service = KService::serviceByDesktopName("konsolepart");
-    //if( service )
-    //{
-    //    factory = KPluginLoader(service->library()).factory();
-    //}
+    KService::Ptr service = KService::serviceByDesktopName("konsolepart");
+    if( service )
+    {
+        factory = KPluginLoader(service->library()).factory();
+    }
 
     m_part = factory ? (factory->create<KParts::Part>(parent)) : 0;
 

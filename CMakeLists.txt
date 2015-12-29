@@ -8,6 +8,8 @@ set(CMAKE_AUTOMOC ON)
 
 # Find the QtWidgets library
 find_package(Qt5Widgets)
+find_package(KF5CoreAddons)
+find_package(KF5Service)
 find_package(KF5Parts)
 
 # Tell CMake to create the helloworld executable
@@ -25,5 +27,7 @@ add_executable(helloworld
 target_link_libraries(
     helloworld
     Qt5::Widgets
+    KF5::CoreAddons
+    KF5::Service
     KF5::Parts
 )
