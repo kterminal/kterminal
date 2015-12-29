@@ -29,7 +29,7 @@
 #include <KLocalizedString>
 #include <QIcon>
 #include <KPluginFactory>
-#include <KPluginLoader>
+//#include <KPluginLoader>
 //#include <KService>
 //#include <KUser>
 
@@ -87,7 +87,8 @@ Terminal::Terminal(QWidget* parent) : QObject(parent)
         disableOffendingPartActions();
 
         m_terminalInterface = qobject_cast<TerminalInterface*>(m_part);
-        if (m_terminalInterface) m_terminalInterface->showShellInDir(KUser().homeDir());
+        //if (m_terminalInterface) m_terminalInterface->showShellInDir(KUser().homeDir());
+        if (m_terminalInterface) m_terminalInterface->showShellInDir("/home/xliiv");
     }
     else
         displayKPartLoadError();
@@ -120,7 +121,8 @@ bool Terminal::eventFilter(QObject* /* watched */, QEvent* event)
     }
     else if (event->type() == QEvent::MouseMove)
     {
-        if (Settings::focusFollowsMouse() && m_terminalWidget && !m_terminalWidget->hasFocus())
+        //if (Settings::focusFollowsMouse() && m_terminalWidget && !m_terminalWidget->hasFocus())
+        if (0 && m_terminalWidget && !m_terminalWidget->hasFocus())
             m_terminalWidget->setFocus();
     }
 

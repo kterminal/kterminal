@@ -94,7 +94,7 @@ class Terminal : public QObject
         KParts::Part* m_part;
         TerminalInterface* m_terminalInterface;
         QWidget* m_partWidget;
-        QPointer<QWidget> m_terminalWidget;
+        QWidget* m_terminalWidget;
         QWidget* m_parentSplitter;
 
         QString m_title;
