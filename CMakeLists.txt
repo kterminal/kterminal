@@ -9,6 +9,7 @@ set(CMAKE_AUTOMOC ON)
 # Find the QtWidgets library
 find_package(Qt5Widgets)
 find_package(KF5CoreAddons)
+find_package(KF5XmlGui)
 find_package(KF5Service)
 find_package(KF5Parts)
 
@@ -28,6 +29,7 @@ target_link_libraries(
     helloworld
     Qt5::Widgets
     KF5::CoreAddons
+    KF5::XmlGui
     KF5::Service
     KF5::Parts
 )

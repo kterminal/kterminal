@@ -2,10 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QWidget>
+#include <KMainWindow>
 #include "sessionstack.h"
 
 
-class MainWindow : public QWidget {
+class MainWindow : public KMainWindow {
     Q_OBJECT
 
     public:
