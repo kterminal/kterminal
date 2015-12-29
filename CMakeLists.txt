@@ -1,26 +1,4 @@
 cmake_minimum_required(VERSION 2.8.12)
-#project(UsingFrameworksTutorial)
-#
-#find_package(
-#    KF5Parts NO_MODULE
-#    Qt5Widgets
-#)
-#
-#set(tutorial_SRCS
-#    main.cpp
-#)
-#add_executable(tutorial ${tutorial_SRCS})
-#
-#target_link_libraries(
-#    tutorial
-#    PRIVATE
-#        KF5::Archive
-#)
-#
-#target_link_libraries(
-#    helloworld Qt5::Widgets
-#)
-
 project(testproject)
 
 # Find includes in corresponding build directories
@@ -29,38 +7,10 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
 # Find the QtWidgets library
-find_package(
-    Qt5Widgets
-)
-find_package(
-    KF5Parts
-)
+find_package(Qt5Widgets)
 
 # Tell CMake to create the helloworld executable
-add_executable(
-    helloworld
-    main.cpp
-    #sessionstack.cpp
-    #session.cpp
-    #splitter.cpp
-    #terminal.cpp
-)
+add_executable(helloworld main.cpp mainwindow.cpp)
 
 # Use the Widgets module from Qt 5.
-target_link_libraries(
-    helloworld
-    Qt5::Widgets
-    KF5::Parts
-)
-include_directories(
-    headers
-)
-
-include_directories(${YOUR_DIRECTORY})
-#set(HEADER_FILES
-#    ${YOUR_DIRECTORY}headers/session.h
-#    ${YOUR_DIRECTORY}headers/splitter.h
-#    ${YOUR_DIRECTORY}headers/terminal.h
-#)
-#add_library(mylib ${HEADER_FILES})
-#add_executable(myexec ${HEADER_FILES})
+target_link_libraries(helloworld Qt5::Widgets)
