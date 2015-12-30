@@ -5,7 +5,7 @@ project(testproject)
 
 
 # https://www.guyrutenberg.com/2014/01/05/enabling-c11-c0x-in-cmake/
-# because of std::function<void(const QString &)> callback = std::function<void(const QString &)>());
+# because of: error: ‘std::function’ has not been declared
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
