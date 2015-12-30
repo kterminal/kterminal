@@ -6,6 +6,12 @@
 #include "sessionstack.h"
 
 
+
+// TODO:: rm it
+#include <QPushButton>
+#include <QSplitter>
+#include "session.h"
+
 class MainWindow : public KMainWindow {
     Q_OBJECT
 
@@ -21,6 +27,10 @@ class MainWindow : public KMainWindow {
 
     private:
         SessionStack *m_sessionStack;
+        // TODO:: rm it
+        QPushButton *m_button;
+        QPushButton *m_button2;
+        Session *m_session;
 };
 
 #endif

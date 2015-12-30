@@ -20,6 +20,7 @@
 */
 
 
+#include <QDebug>
 #include "session.h"
 #include "terminal.h"
 
@@ -36,6 +37,7 @@ Session::Session(SessionType type, QWidget* parent) : QObject(parent)
     m_closable = true;
 
     m_baseSplitter = new Splitter(Qt::Horizontal, parent);
+    m_baseSplitter->resize(400, 300);
     connect(m_baseSplitter, SIGNAL(destroyed()), this, SLOT(prepareShutdown()));
 
     setupSession(type);

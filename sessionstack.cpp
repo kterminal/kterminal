@@ -46,6 +46,7 @@ SessionStack::~SessionStack()
 
 int SessionStack::addSession(Session::SessionType type)
 {
+    this->resize(400,300);
     Session* session = new Session(type, this);
     connect(session, SIGNAL(titleChanged(int,QString)), this, SIGNAL(titleChanged(int,QString)));
     connect(session, SIGNAL(terminalManuallyActivated(Terminal*)), this, SLOT(handleManualTerminalActivation(Terminal*)));
@@ -60,9 +61,10 @@ int SessionStack::addSession(Session::SessionType type)
     m_sessions.insert(session->id(), session);
 
     //if (Settings::dynamicTabTitles())
-    //    emit sessionAdded(session->id(), session->title());
-    //else
-    //    emit sessionAdded(session->id());
+    if (0)
+        emit sessionAdded(session->id(), session->title());
+    else
+        emit sessionAdded(session->id());
 
     return session->id();
 }

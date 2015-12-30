@@ -7,8 +7,24 @@ class SessionStack;
 
 
 MainWindow::MainWindow(QWidget *parent) : KMainWindow(parent) {
+    this->resize(1024, 640);
     m_sessionStack = new SessionStack(this);
     m_sessionStack->addSession();
+
+    /*
+    Session* session = new Session(Session::Single, this);
+    */
+
+    /*
+    QSplitter *splitter = new QSplitter(this);
+    splitter->resize(600, 600);
+    QPushButton *m_button = new QPushButton("1");
+    QPushButton *m_button2 = new QPushButton("2");
+    splitter->addWidget(m_button);
+    splitter->addWidget(m_button2);
+    */
+    //QPushButton *m_button = new QPushButton("1", this);
+    //m_button->resize(600, 600);
 }
 
 
