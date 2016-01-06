@@ -1,3 +1,4 @@
+#include <iostream>
 #include "mainwindow.h"
 #include "sessionstack.h"
 
@@ -25,6 +26,10 @@ MainWindow::MainWindow(QWidget *parent) : KMainWindow(parent) {
     */
     //QPushButton *m_button = new QPushButton("1", this);
     //m_button->resize(600, 600);
+
+    QShortcut *shortcut = new QShortcut(QKeySequence("Ctrl+)"), this);
+    QObject::connect(shortcut, SIGNAL(activated()), this, SLOT(splitLeftRight()));
+
 }
 
 
@@ -33,4 +38,8 @@ void MainWindow::handleTerminalActivity(Terminal *terminal) {
 }
 
 void MainWindow::handleTerminalSilence(Terminal *terminal) {
+}
+void MainWindow::splitLeftRight() {
+    std::cout << "split leftright" << std::endl;
+    m_sessionStack->splitSessionLeftRight(0);
 }

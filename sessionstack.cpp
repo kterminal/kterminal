@@ -46,7 +46,7 @@ SessionStack::~SessionStack()
 
 int SessionStack::addSession(Session::SessionType type)
 {
-    this->resize(400,300);
+    this->resize(800,600);
     Session* session = new Session(type, this);
     connect(session, SIGNAL(titleChanged(int,QString)), this, SIGNAL(titleChanged(int,QString)));
     connect(session, SIGNAL(terminalManuallyActivated(Terminal*)), this, SLOT(handleManualTerminalActivation(Terminal*)));
