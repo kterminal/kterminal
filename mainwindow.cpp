@@ -28,7 +28,10 @@ MainWindow::MainWindow(QWidget *parent) : KMainWindow(parent) {
     //m_button->resize(600, 600);
 
     QShortcut *shortcut = new QShortcut(QKeySequence("Ctrl+)"), this);
-    QObject::connect(shortcut, SIGNAL(activated()), this, SLOT(splitLeftRight()));
+    QObject::connect(shortcut, SIGNAL(activated()), this, SLOT(mySplitLeftRight()));
+
+    shortcut = new QShortcut(QKeySequence("Ctrl+("), this);
+    QObject::connect(shortcut, SIGNAL(activated()), this, SLOT(mySplitTopBottom()));
 
 }
 
@@ -39,7 +42,11 @@ void MainWindow::handleTerminalActivity(Terminal *terminal) {
 
 void MainWindow::handleTerminalSilence(Terminal *terminal) {
 }
-void MainWindow::splitLeftRight() {
-    std::cout << "split leftright" << std::endl;
+void MainWindow::mySplitTopBottom() {
+    std::cout << "mySplitTopBottom" << std::endl;
+    m_sessionStack->splitSessionTopBottom(0);
+}
+void MainWindow::mySplitLeftRight() {
+    std::cout << "mySplitLeftRight" << std::endl;
     m_sessionStack->splitSessionLeftRight(0);
 }

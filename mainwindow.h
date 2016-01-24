@@ -29,7 +29,8 @@ class MainWindow : public KMainWindow {
     public slots:
         void handleTerminalActivity(Terminal* terminal);
         void handleTerminalSilence(Terminal* terminal);
-        void splitLeftRight();
+        void mySplitTopBottom();
+        void mySplitLeftRight();
 
     signals:
         void windowClosed();
