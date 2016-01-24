@@ -39,7 +39,7 @@ add_executable(helloworld
     main.cpp
     mainwindow.cpp
     terminal.cpp
-    visualeventoverlay.cpp
+    #visualeventoverlay.cpp
     splitter.cpp
     session.cpp
     sessionstack.cpp
