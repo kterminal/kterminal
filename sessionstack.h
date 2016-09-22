@@ -44,6 +44,7 @@ class SessionStack : public QTabWidget
     public slots:
         Q_SCRIPTABLE void horizontal_split_current_terminal();
         Q_SCRIPTABLE void vertical_split_current_terminal();
+        Q_SCRIPTABLE void auto_select_last_session();
 
         Q_SCRIPTABLE int addSession(Session::SessionType type = Session::Single);
         Q_SCRIPTABLE int addSessionTwoHorizontal();
