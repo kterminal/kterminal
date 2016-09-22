@@ -41,6 +41,9 @@ MainWindow::MainWindow(QWidget *parent) : KMainWindow(parent) {
 
 }
 
+void MainWindow::closeEvent(QCloseEvent *event) {
+    qApp->exit();
+}
 
 void MainWindow::handleTerminalActivity(Terminal *terminal) {
 
