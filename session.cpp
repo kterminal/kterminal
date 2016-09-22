@@ -416,19 +416,6 @@ void Session::prepareShutdown()
     deleteLater();
 }
 
-const QString Session::terminalIdList()
-{
-    QList<int> keyList = m_terminals.uniqueKeys();
-    QStringList idList;
-
-    QListIterator<int> i(keyList);
-
-    while (i.hasNext())
-        idList << QString::number(i.next());
-
-    return idList.join(",");
-}
-
 bool Session::hasTerminal(int terminalId)
 {
     return m_terminals.contains(terminalId);
