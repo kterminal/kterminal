@@ -28,6 +28,9 @@ class MainWindow : public KMainWindow {
     signals:
         void windowClosed();
 
+    protected:
+        void closeEvent(QCloseEvent *event);
+
     private:
         SessionStack *m_sessionStack;
         KActionCollection* m_actionCollection;

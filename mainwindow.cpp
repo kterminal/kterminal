@@ -44,6 +44,9 @@ MainWindow::MainWindow(QWidget *parent) : KMainWindow(parent) {
     QObject::connect(m_new_tab_shortcut, SIGNAL(activated()), m_sessionStack, SLOT(addSession()));
 }
 
+void MainWindow::closeEvent(QCloseEvent *event) {
+    qApp->exit();
+}
 
 void MainWindow::handleTerminalActivity(Terminal *terminal) {
 
