@@ -3,6 +3,5 @@
 mkdir -p build
 cd build
 cmake ..
-make
-./helloworld
+make && ./konsplit
 
