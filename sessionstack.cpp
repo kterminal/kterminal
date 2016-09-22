@@ -36,9 +36,6 @@ SessionStack::SessionStack(QWidget* parent, QWidget *window) : QStackedWidget(pa
     QDBusConnection::sessionBus().registerObject("/konsplit/sessions", this, QDBusConnection::ExportScriptableSlots);
 
     m_activeSessionId = -1;
-
-    ///m_visualEventOverlay = new VisualEventOverlay(this);
-    ///connect(this, SIGNAL(removeTerminalHighlight()), m_visualEventOverlay, SLOT(removeTerminalHighlight()));
 }
 
 SessionStack::~SessionStack()
@@ -50,7 +47,6 @@ int SessionStack::addSession(Session::SessionType type)
     Session* session = new Session(type, this);
     connect(session, SIGNAL(titleChanged(int,QString)), this, SIGNAL(titleChanged(int,QString)));
     connect(session, SIGNAL(terminalManuallyActivated(Terminal*)), this, SLOT(handleManualTerminalActivation(Terminal*)));
-    ///connect(session, SIGNAL(keyboardInputBlocked(Terminal*)), m_visualEventOverlay, SLOT(indicateKeyboardInputBlocked(Terminal*)));
     connect(session, SIGNAL(activityDetected(Terminal*)), m_window, SLOT(handleTerminalActivity(Terminal*)));
     connect(session, SIGNAL(silenceDetected(Terminal*)), m_window, SLOT(handleTerminalSilence(Terminal*)));
     connect(session, SIGNAL(destroyed(int)), this, SLOT(cleanup(int)));
@@ -59,11 +55,7 @@ int SessionStack::addSession(Session::SessionType type)
 
     m_sessions.insert(session->id(), session);
 
-    //if (Settings::dynamicTabTitles())
-    if (0)
-        emit sessionAdded(session->id(), session->title());
-    else
-        emit sessionAdded(session->id());
+    emit sessionAdded(session->id());
 
     return session->id();
 }
@@ -88,9 +80,6 @@ void SessionStack::raiseSession(int sessionId)
     if (sessionId == -1 || !m_sessions.contains(sessionId)) return;
     Session* session = m_sessions.value(sessionId);
 
-    ///if (!m_visualEventOverlay->isHidden())
-    ///    m_visualEventOverlay->hide();
-
     if (m_activeSessionId != -1 && m_sessions.contains(m_activeSessionId))
     {
         Session* oldActiveSession = m_sessions.value(m_activeSessionId);
@@ -112,9 +101,6 @@ void SessionStack::raiseSession(int sessionId)
     if (session->widget()->focusWidget())
         session->widget()->focusWidget()->setFocus();
 
-    ///if (session->hasTerminalsWithKeyboardInputDisabled())
-    ///    m_visualEventOverlay->show();
-
     connect(this, SIGNAL(closeTerminal()), session, SLOT(closeTerminal()));
     connect(this, SIGNAL(previousTerminal()), session, SLOT(focusPreviousTerminal()));
     connect(this, SIGNAL(nextTerminal()), session, SLOT(focusNextTerminal()));
@@ -132,8 +118,6 @@ void SessionStack::removeSession(int sessionId)
     if (sessionId == -1) return;
     if (!m_sessions.contains(sessionId)) return;
 
-    ///if (queryClose(sessionId, QueryCloseSession))
-    ///    m_sessions.value(sessionId)->deleteLater();
     m_sessions.value(sessionId)->deleteLater();
 }
 
@@ -156,18 +140,6 @@ void SessionStack::removeTerminal(int terminalId)
     }
 }
 
-///void SessionStack::closeActiveTerminal(int sessionId)
-///{
-///    if (sessionId == -1) sessionId = m_activeSessionId;
-///    if (sessionId == -1) return;
-///    if (!m_sessions.contains(sessionId)) return;
-///
-///    ///if (queryClose(sessionId, QueryCloseTerminal))
-///    ///    m_sessions.value(sessionId)->closeTerminal();
-///    m_sessions.value(sessionId)->closeTerminal();
-///}
-
-
 void SessionStack::cleanup(int sessionId)
 {
     if (sessionId == m_activeSessionId) m_activeSessionId = -1;
@@ -184,42 +156,6 @@ int SessionStack::activeTerminalId()
     if (!m_sessions.contains(m_activeSessionId)) return -1;
 
     return m_sessions.value(m_activeSessionId)->activeTerminalId();
-}
-
-const QString SessionStack::sessionIdList()
-{
-    QList<int> keyList = m_sessions.uniqueKeys();
-    QStringList idList;
-
-    QListIterator<int> i(keyList);
-
-    while (i.hasNext())
-        idList << QString::number(i.next());
-
-    return idList.join(",");
-}
-
-const QString SessionStack::terminalIdList()
-{
-    QStringList idList;
-
-    QHashIterator<int, Session*> it(m_sessions);
-
-    while (it.hasNext())
-    {
-        it.next();
-
-        idList << it.value()->terminalIdList();
-    }
-
-    return idList.join(",");
-}
-
-const QString SessionStack::terminalIdsForSessionId(int sessionId)
-{
-    if (!m_sessions.contains(sessionId)) return QString::number(-1);
-
-    return m_sessions.value(sessionId)->terminalIdList();
 }
 
 int SessionStack::sessionIdForTerminalId(int terminalId)
@@ -262,226 +198,6 @@ void SessionStack::runCommandInTerminal(int terminalId, const QString& command)
         it.value()->runCommand(command, terminalId);
     }
 }
-
-///bool SessionStack::isSessionClosable(int sessionId)
-///{
-///    if (sessionId == -1) sessionId = m_activeSessionId;
-///    if (sessionId == -1) return false;
-///    if (!m_sessions.contains(sessionId)) return false;
-///
-///    return m_sessions.value(sessionId)->closable();
-///}
-///
-///void SessionStack::setSessionClosable(int sessionId, bool closable)
-///{
-///    if (sessionId == -1) sessionId = m_activeSessionId;
-///    if (sessionId == -1) return;
-///    if (!m_sessions.contains(sessionId)) return;
-///
-///    m_sessions.value(sessionId)->setClosable(closable);
-///}
-///
-///bool SessionStack::hasUnclosableSessions() const
-///{
-///    QHashIterator<int, Session*> it(m_sessions);
-///
-///    while (it.hasNext())
-///    {
-///        it.next();
-///
-///        if (!it.value()->closable())
-///            return true;
-///    }
-///
-///    return false;
-///}
-///
-///bool SessionStack::isSessionKeyboardInputEnabled(int sessionId)
-///{
-///    if (sessionId == -1) sessionId = m_activeSessionId;
-///    if (sessionId == -1) return false;
-///    if (!m_sessions.contains(sessionId)) return false;
-///
-///    return m_sessions.value(sessionId)->keyboardInputEnabled();
-///}
-///
-///void SessionStack::setSessionKeyboardInputEnabled(int sessionId, bool enabled)
-///{
-///    if (sessionId == -1) sessionId = m_activeSessionId;
-///    if (sessionId == -1) return;
-///    if (!m_sessions.contains(sessionId)) return;
-///
-///    m_sessions.value(sessionId)->setKeyboardInputEnabled(enabled);
-///
-///    if (sessionId == m_activeSessionId)
-///    {
-///        if (enabled)
-///            m_visualEventOverlay->hide();
-///        else
-///            m_visualEventOverlay->show();
-///    }
-///}
-///
-///bool SessionStack::isTerminalKeyboardInputEnabled(int terminalId)
-///{
-///    int sessionId = sessionIdForTerminalId(terminalId);
-///    if (sessionId == -1) return false;
-///    if (!m_sessions.contains(sessionId)) return false;
-///
-///    return m_sessions.value(sessionId)->keyboardInputEnabled(terminalId);
-///}
-///
-///void SessionStack::setTerminalKeyboardInputEnabled(int terminalId, bool enabled)
-///{
-///    int sessionId = sessionIdForTerminalId(terminalId);
-///    if (sessionId == -1) return;
-///    if (!m_sessions.contains(sessionId)) return;
-///
-///    m_sessions.value(sessionId)->setKeyboardInputEnabled(terminalId, enabled);
-///
-///    if (sessionId == m_activeSessionId)
-///    {
-///        if (enabled)
-///            m_visualEventOverlay->hide();
-///        else
-///            m_visualEventOverlay->show();
-///    }
-///}
-///
-///bool SessionStack::hasTerminalsWithKeyboardInputEnabled(int sessionId)
-///{
-///    if (sessionId == -1) sessionId = m_activeSessionId;
-///    if (sessionId == -1) return false;
-///    if (!m_sessions.contains(sessionId)) return false;
-///
-///    return m_sessions.value(sessionId)->hasTerminalsWithKeyboardInputEnabled();
-///}
-///
-///bool SessionStack::hasTerminalsWithKeyboardInputDisabled(int sessionId)
-///{
-///    if (sessionId == -1) sessionId = m_activeSessionId;
-///    if (sessionId == -1) return false;
-///    if (!m_sessions.contains(sessionId)) return false;
-///
-///    return m_sessions.value(sessionId)->hasTerminalsWithKeyboardInputDisabled();
-///}
-///
-///bool SessionStack::isSessionMonitorActivityEnabled(int sessionId)
-///{
-///    if (sessionId == -1) sessionId = m_activeSessionId;
-///    if (sessionId == -1) return false;
-///    if (!m_sessions.contains(sessionId)) return false;
-///
-///    return m_sessions.value(sessionId)->monitorActivityEnabled();
-///}
-///
-///void SessionStack::setSessionMonitorActivityEnabled(int sessionId, bool enabled)
-///{
-///    if (sessionId == -1) sessionId = m_activeSessionId;
-///    if (sessionId == -1) return;
-///    if (!m_sessions.contains(sessionId)) return;
-///
-///    m_sessions.value(sessionId)->setMonitorActivityEnabled(enabled);
-///}
-///
-///bool SessionStack::isTerminalMonitorActivityEnabled(int terminalId)
-///{
-///    int sessionId = sessionIdForTerminalId(terminalId);
-///    if (sessionId == -1) return false;
-///    if (!m_sessions.contains(sessionId)) return false;
-///
-///    return m_sessions.value(sessionId)->monitorActivityEnabled(terminalId);
-///}
-///
-///void SessionStack::setTerminalMonitorActivityEnabled(int terminalId, bool enabled)
-///{
-///    int sessionId = sessionIdForTerminalId(terminalId);
-///    if (sessionId == -1) return;
-///    if (!m_sessions.contains(sessionId)) return;
-///
-///    m_sessions.value(sessionId)->setMonitorActivityEnabled(terminalId, enabled);
-///}
-///
-///bool SessionStack::hasTerminalsWithMonitorActivityEnabled(int sessionId)
-///{
-///    if (sessionId == -1) sessionId = m_activeSessionId;
-///    if (sessionId == -1) return false;
-///    if (!m_sessions.contains(sessionId)) return false;
-///
-///    return m_sessions.value(sessionId)->hasTerminalsWithMonitorActivityEnabled();
-///}
-///
-///bool SessionStack::hasTerminalsWithMonitorActivityDisabled(int sessionId)
-///{
-///    if (sessionId == -1) sessionId = m_activeSessionId;
-///    if (sessionId == -1) return false;
-///    if (!m_sessions.contains(sessionId)) return false;
-///
-///    return m_sessions.value(sessionId)->hasTerminalsWithMonitorActivityDisabled();
-///}
-///
-///bool SessionStack::isSessionMonitorSilenceEnabled(int sessionId)
-///{
-///    if (sessionId == -1) sessionId = m_activeSessionId;
-///    if (sessionId == -1) return false;
-///    if (!m_sessions.contains(sessionId)) return false;
-///
-///    return m_sessions.value(sessionId)->monitorSilenceEnabled();
-///}
-///
-///void SessionStack::setSessionMonitorSilenceEnabled(int sessionId, bool enabled)
-///{
-///    if (sessionId == -1) sessionId = m_activeSessionId;
-///    if (sessionId == -1) return;
-///    if (!m_sessions.contains(sessionId)) return;
-///
-///    m_sessions.value(sessionId)->setMonitorSilenceEnabled(enabled);
-///}
-///
-///bool SessionStack::isTerminalMonitorSilenceEnabled(int terminalId)
-///{
-///    int sessionId = sessionIdForTerminalId(terminalId);
-///    if (sessionId == -1) return false;
-///    if (!m_sessions.contains(sessionId)) return false;
-///
-///    return m_sessions.value(sessionId)->monitorSilenceEnabled(terminalId);
-///}
-///
-///void SessionStack::setTerminalMonitorSilenceEnabled(int terminalId, bool enabled)
-///{
-///    int sessionId = sessionIdForTerminalId(terminalId);
-///    if (sessionId == -1) return;
-///    if (!m_sessions.contains(sessionId)) return;
-///
-///    m_sessions.value(sessionId)->setMonitorSilenceEnabled(terminalId, enabled);
-///}
-///
-///bool SessionStack::hasTerminalsWithMonitorSilenceEnabled(int sessionId)
-///{
-///    if (sessionId == -1) sessionId = m_activeSessionId;
-///    if (sessionId == -1) return false;
-///    if (!m_sessions.contains(sessionId)) return false;
-///
-///    return m_sessions.value(sessionId)->hasTerminalsWithMonitorSilenceEnabled();
-///}
-///
-///bool SessionStack::hasTerminalsWithMonitorSilenceDisabled(int sessionId)
-///{
-///    if (sessionId == -1) sessionId = m_activeSessionId;
-///    if (sessionId == -1) return false;
-///    if (!m_sessions.contains(sessionId)) return false;
-///
-///    return m_sessions.value(sessionId)->hasTerminalsWithMonitorSilenceDisabled();
-///}
-///
-///void SessionStack::editProfile(int sessionId)
-///{
-///    if (sessionId == -1) sessionId = m_activeSessionId;
-///    if (sessionId == -1) return;
-///    if (!m_sessions.contains(sessionId)) return;
-///
-///    m_sessions.value(sessionId)->editProfile();
-///}
 
 int SessionStack::splitSessionLeftRight(int sessionId)
 {
@@ -552,52 +268,6 @@ int SessionStack::tryGrowTerminalBottom(int terminalId, uint pixels)
 
     return m_sessions.value(sessionId)->tryGrowTerminal(terminalId, Session::Down, pixels);
 }
-
-///void SessionStack::emitTitles()
-///{
-///    QString title;
-///
-///    QHashIterator<int, Session*> it(m_sessions);
-///
-///    while (it.hasNext())
-///    {
-///        it.next();
-///
-///        title = it.value()->title();
-///
-///        if (!title.isEmpty())
-///            emit titleChanged(it.value()->id(), title);
-///    }
-///}
-
-///bool SessionStack::requiresVisualEventOverlay()
-///{
-///    if (m_activeSessionId == -1) return false;
-///    if (!m_sessions.contains(m_activeSessionId)) return false;
-///
-///    return m_sessions.value(m_activeSessionId)->hasTerminalsWithKeyboardInputDisabled();
-///}
-
-///void SessionStack::handleTerminalHighlightRequest(int terminalId)
-///{
-///    Terminal* terminal = 0;
-///
-///    QHashIterator<int, Session*> it(m_sessions);
-///
-///    while (it.hasNext())
-///    {
-///        it.next();
-///
-///        terminal = it.value()->getTerminal(terminalId);
-///
-///        if (terminal && it.value()->id() == m_activeSessionId)
-///        {
-///            m_visualEventOverlay->highlightTerminal(terminal, true);
-///
-///            break;
-///        }
-///    }
-///}
 
 void SessionStack::handleManualTerminalActivation(Terminal* terminal)
 {

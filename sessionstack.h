@@ -32,7 +32,6 @@
 
 
 class Session;
-///class VisualEventOverlay;
 
 class SessionStack : public QStackedWidget
 {
@@ -42,15 +41,6 @@ class SessionStack : public QStackedWidget
     public:
         explicit SessionStack(QWidget* parent, QWidget* window);
         ~SessionStack();
-
-        ///void closeActiveTerminal(int sessionId = -1);
-
-        ///void editProfile(int sessionId = -1);
-
-        ///void emitTitles();
-
-        ///bool requiresVisualEventOverlay();
-
 
     public slots:
         Q_SCRIPTABLE int addSession(Session::SessionType type = Session::Single);
@@ -76,40 +66,10 @@ class SessionStack : public QStackedWidget
         Q_SCRIPTABLE int activeSessionId() { return m_activeSessionId; }
         Q_SCRIPTABLE int activeTerminalId();
 
-        Q_SCRIPTABLE const QString sessionIdList();
-        Q_SCRIPTABLE const QString terminalIdList();
-        Q_SCRIPTABLE const QString terminalIdsForSessionId(int sessionId);
         Q_SCRIPTABLE int sessionIdForTerminalId(int terminalId);
 
         Q_SCRIPTABLE void runCommand(const QString& command);
         Q_SCRIPTABLE void runCommandInTerminal(int terminalId, const QString& command);
-
-        ///Q_SCRIPTABLE bool isSessionClosable(int sessionId);
-        ///Q_SCRIPTABLE void setSessionClosable(int sessionId, bool closable);
-        ///Q_SCRIPTABLE bool hasUnclosableSessions() const;
-
-        ///Q_SCRIPTABLE bool isSessionKeyboardInputEnabled(int sessionId);
-        ///Q_SCRIPTABLE void setSessionKeyboardInputEnabled(int sessionId, bool enabled);
-        ///Q_SCRIPTABLE bool isTerminalKeyboardInputEnabled(int terminalId);
-        ///Q_SCRIPTABLE void setTerminalKeyboardInputEnabled(int terminalId, bool enabled);
-        ///Q_SCRIPTABLE bool hasTerminalsWithKeyboardInputEnabled(int sessionId);
-        ///Q_SCRIPTABLE bool hasTerminalsWithKeyboardInputDisabled(int sessionId);
-
-        ///Q_SCRIPTABLE bool isSessionMonitorActivityEnabled(int sessionId);
-        ///Q_SCRIPTABLE void setSessionMonitorActivityEnabled(int sessionId, bool enabled);
-        ///Q_SCRIPTABLE bool isTerminalMonitorActivityEnabled(int terminalId);
-        ///Q_SCRIPTABLE void setTerminalMonitorActivityEnabled(int terminalId, bool enabled);
-        ///Q_SCRIPTABLE bool hasTerminalsWithMonitorActivityEnabled(int sessionId);
-        ///Q_SCRIPTABLE bool hasTerminalsWithMonitorActivityDisabled(int sessionId);
-
-        ///Q_SCRIPTABLE bool isSessionMonitorSilenceEnabled(int sessionId);
-        ///Q_SCRIPTABLE void setSessionMonitorSilenceEnabled(int sessionId, bool enabled);
-        ///Q_SCRIPTABLE bool isTerminalMonitorSilenceEnabled(int terminalId);
-        ///Q_SCRIPTABLE void setTerminalMonitorSilenceEnabled(int terminalId, bool enabled);
-        ///Q_SCRIPTABLE bool hasTerminalsWithMonitorSilenceEnabled(int sessionId);
-        ///Q_SCRIPTABLE bool hasTerminalsWithMonitorSilenceDisabled(int sessionId);
-
-        ///void handleTerminalHighlightRequest(int terminalId);
 
 
     signals:
@@ -137,11 +97,6 @@ class SessionStack : public QStackedWidget
 
 
     private:
-        ///enum QueryCloseType { QueryCloseSession, QueryCloseTerminal };
-        ///bool queryClose(int sessionId, QueryCloseType type);
-
-        ///VisualEventOverlay* m_visualEventOverlay;
-
         int m_activeSessionId;
         QWidget *m_window;
         QHash<int, Session*> m_sessions;

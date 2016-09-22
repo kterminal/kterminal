@@ -31,7 +31,6 @@
 #include <KPluginFactory>
 #include <KPluginLoader>
 #include <KService>
-//#include <KUser>
 
 #include <QAction>
 #include <QHBoxLayout>
