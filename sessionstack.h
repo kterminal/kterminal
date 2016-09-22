@@ -40,7 +40,7 @@ class SessionStack : public QStackedWidget
     Q_CLASSINFO("D-Bus Interface", "org.kde.yakuake")
 
     public:
-        explicit SessionStack(QWidget* parent = 0);
+        explicit SessionStack(QWidget* parent, QWidget* window);
         ~SessionStack();
 
         ///void closeActiveTerminal(int sessionId = -1);
@@ -143,7 +143,7 @@ class SessionStack : public QStackedWidget
         ///VisualEventOverlay* m_visualEventOverlay;
 
         int m_activeSessionId;
-
+        QWidget *m_window;
         QHash<int, Session*> m_sessions;
 };
 

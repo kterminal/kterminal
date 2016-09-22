@@ -6,15 +6,10 @@
 #include <KMainWindow>
 #include "sessionstack.h"
 
-
-
-// TODO:: rm it
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QGridLayout>
 #include <QShortcut>
-#include <QKeySequence>
-#include <QPushButton>
-#include <QSplitter>
 #include "session.h"
-
 
 class QAction;
 class KActionCollection;
@@ -38,11 +33,10 @@ class MainWindow : public KMainWindow {
     private:
         SessionStack *m_sessionStack;
         KActionCollection* m_actionCollection;
-        // TODO:: rm it
-        QShortcut *shortcut;
-        QAction *openAct;
-        QPushButton *m_button;
-        QPushButton *m_button2;
+        QWidget *centralWidget;
+        QGridLayout *gridLayout;
+        QShortcut *m_split_left_shortcut;
+        QShortcut *m_split_right_shortcut;
         Session *m_session;
 };
 

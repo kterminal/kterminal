@@ -8,30 +8,36 @@ class SessionStack;
 
 
 MainWindow::MainWindow(QWidget *parent) : KMainWindow(parent) {
-    this->resize(1024, 640);
-    m_sessionStack = new SessionStack(this);
+
+    const char *app_name = "Konsplit";
+    this->setWindowTitle(QApplication::translate(app_name, app_name, 0));
+    if (this->objectName().isEmpty()) {
+        this->setObjectName(app_name);
+    }
+
+    centralWidget = new QWidget(this);
+    centralWidget->setObjectName(QStringLiteral("centralWidget"));
+
+    m_sessionStack = new SessionStack(centralWidget, this);
     m_sessionStack->addSession();
 
-    /*
-    Session* session = new Session(Session::Single, this);
-    */
+    gridLayout = new QGridLayout(centralWidget);
+    gridLayout->setSpacing(6);
+    gridLayout->setContentsMargins(1, 1, 1, 1);
+    gridLayout->setObjectName(QStringLiteral("gridLayout"));
+    this->setCentralWidget(centralWidget);
 
-    /*
-    QSplitter *splitter = new QSplitter(this);
-    splitter->resize(600, 600);
-    QPushButton *m_button = new QPushButton("1");
-    QPushButton *m_button2 = new QPushButton("2");
-    splitter->addWidget(m_button);
-    splitter->addWidget(m_button2);
-    */
-    //QPushButton *m_button = new QPushButton("1", this);
-    //m_button->resize(600, 600);
+    gridLayout->addWidget(m_sessionStack);
 
-    QShortcut *shortcut = new QShortcut(QKeySequence("Ctrl+)"), this);
-    QObject::connect(shortcut, SIGNAL(activated()), this, SLOT(mySplitLeftRight()));
+    //this->resize(700, 340);
+    this->resize(1300, 840);
 
-    shortcut = new QShortcut(QKeySequence("Ctrl+("), this);
-    QObject::connect(shortcut, SIGNAL(activated()), this, SLOT(mySplitTopBottom()));
+
+    m_split_left_shortcut = new QShortcut(QKeySequence("Ctrl+)"), this);
+    QObject::connect(m_split_left_shortcut, SIGNAL(activated()), this, SLOT(mySplitLeftRight()));
+
+    m_split_right_shortcut = new QShortcut(QKeySequence("Ctrl+("), this);
+    QObject::connect(m_split_right_shortcut, SIGNAL(activated()), this, SLOT(mySplitTopBottom()));
 
 }
 
