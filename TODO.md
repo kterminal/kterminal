@@ -15,15 +15,12 @@ Kommand
 - decide on better shortcuts
 - save window size on quit
 - set app icon
-- bugs with tabs
-  - auto select new tab on create
-  - auto select a terminal on tab close
-- tabs visuals
+- tabs
+   - order of tabs is not right when closing them with CTRL-D
    - tab label should auto rename using regular conventions
       - folder, running process, escape function
    - tab rename by double click
    - icons on tabs?
-   - tab bar at the bottom
 
 Also
 - move to github once we have a good name

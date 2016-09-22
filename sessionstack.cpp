@@ -22,7 +22,6 @@
 
 #include "sessionstack.h"
 //#include "settings.h"
-///#include "visualeventoverlay.h"
 
 #include <KMessageBox>
 #include <KLocalizedString>
@@ -34,12 +33,11 @@ SessionStack::SessionStack(QWidget* parent, QWidget *window) : QTabWidget(parent
 {
     m_window = window;
     QDBusConnection::sessionBus().registerObject("/konsplit/sessions", this, QDBusConnection::ExportScriptableSlots);
-
+    setTabPosition(QTabWidget::South);
     m_activeSessionId = -1;
 }
 
-SessionStack::~SessionStack()
-{
+SessionStack::~SessionStack() {
 }
 
 void SessionStack::horizontal_split_current_terminal() {
@@ -54,6 +52,11 @@ void SessionStack::vertical_split_current_terminal() {
   current_spliter->session()->splitLeftRight();
 }
 
+void SessionStack::auto_select_last_session() {
+  Session *session = m_sessions.values().last();
+  raiseSession(session->id());
+}
+
 int SessionStack::addSession(Session::SessionType type)
 {
     Session* session = new Session(type, this);
@@ -63,11 +66,14 @@ int SessionStack::addSession(Session::SessionType type)
     connect(session, SIGNAL(silenceDetected(Terminal*)), m_window, SLOT(handleTerminalSilence(Terminal*)));
     connect(session, SIGNAL(destroyed(int)), this, SLOT(cleanup(int)));
 
-    addTab(session->widget(), tr("Shell"));
-
     m_sessions.insert(session->id(), session);
 
+    QString tab_label = QString("Shell (") + QString::number(session->id(), 16) + ")";
+    addTab(session->widget(), tab_label);
+
     emit sessionAdded(session->id());
+
+    raiseSession(session->id());
 
     return session->id();
 }
@@ -112,6 +118,8 @@ void SessionStack::raiseSession(int sessionId)
 
     if (session->widget()->focusWidget())
         session->widget()->focusWidget()->setFocus();
+
+    session->focusNextTerminal();
 
     connect(this, SIGNAL(closeTerminal()), session, SLOT(closeTerminal()));
     connect(this, SIGNAL(previousTerminal()), session, SLOT(focusPreviousTerminal()));
@@ -159,8 +167,11 @@ void SessionStack::cleanup(int sessionId)
     m_sessions.remove(sessionId);
 
     emit sessionRemoved(sessionId);
-    if (m_sessions.empty())
+    if (m_sessions.empty()) {
       qApp->exit();
+    } else {
+      auto_select_last_session();
+    }
 }
 
 int SessionStack::activeTerminalId()
