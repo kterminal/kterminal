@@ -21,19 +21,23 @@
 #ifndef SPLITTER_H
 #define SPLITTER_H
 
-
+#include <iostream>
 #include <QSplitter>
 
+class Session;
 
 class Splitter: public QSplitter
 {
     Q_OBJECT
 
     public:
-        explicit Splitter(Qt::Orientation orientation, QWidget* parent = 0);
-         ~Splitter();
+        explicit Splitter(Qt::Orientation orientation, Session* session, QWidget* parent);
+        ~Splitter();
+        Session* session();
 
         void recursiveCleanup();
+    private:
+        Session *m_session;
 };
 
 #endif

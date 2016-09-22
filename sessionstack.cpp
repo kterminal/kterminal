@@ -30,7 +30,7 @@
 #include <QtDBus/QtDBus>
 
 
-SessionStack::SessionStack(QWidget* parent, QWidget *window) : QStackedWidget(parent)
+SessionStack::SessionStack(QWidget* parent, QWidget *window) : QTabWidget(parent)
 {
     m_window = window;
     QDBusConnection::sessionBus().registerObject("/konsplit/sessions", this, QDBusConnection::ExportScriptableSlots);
@@ -42,6 +42,18 @@ SessionStack::~SessionStack()
 {
 }
 
+void SessionStack::horizontal_split_current_terminal() {
+  Splitter *current_spliter = (Splitter*)currentWidget();
+  std::cout << "Split current terminal horizontally (TopBottom)" << std::endl;
+  current_spliter->session()->splitTopBottom();
+}
+
+void SessionStack::vertical_split_current_terminal() {
+  Splitter *current_spliter = (Splitter*)currentWidget();
+  std::cout << "Split current terminal vertically (LeftRight)" << std::endl;
+  current_spliter->session()->splitLeftRight();
+}
+
 int SessionStack::addSession(Session::SessionType type)
 {
     Session* session = new Session(type, this);
@@ -51,7 +63,7 @@ int SessionStack::addSession(Session::SessionType type)
     connect(session, SIGNAL(silenceDetected(Terminal*)), m_window, SLOT(handleTerminalSilence(Terminal*)));
     connect(session, SIGNAL(destroyed(int)), this, SLOT(cleanup(int)));
 
-    addWidget(session->widget());
+    addTab(session->widget(), tr("Shell"));
 
     m_sessions.insert(session->id(), session);
 

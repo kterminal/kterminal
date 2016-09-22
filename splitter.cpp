@@ -22,14 +22,19 @@
 #include "splitter.h"
 
 
-Splitter::Splitter(Qt::Orientation orientation, QWidget* parent) : QSplitter(orientation, parent)
+Splitter::Splitter(Qt::Orientation orientation, Session* session, QWidget* parent) : QSplitter(orientation, parent)
 {
+    m_session = session;
     setAutoFillBackground(true);
     setOpaqueResize(false);
 }
 
 Splitter::~Splitter()
 {
+}
+
+Session* Splitter::session() {
+  return m_session;
 }
 
 void Splitter::recursiveCleanup()

@@ -23,17 +23,16 @@
 #ifndef SESSIONSTACK_H
 #define SESSIONSTACK_H
 
-
 #include "session.h"
 
 
 #include <QHash>
-#include <QStackedWidget>
+#include <QTabWidget>
 
 
 class Session;
 
-class SessionStack : public QStackedWidget
+class SessionStack : public QTabWidget
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.kde.konsplit")
@@ -43,6 +42,9 @@ class SessionStack : public QStackedWidget
         ~SessionStack();
 
     public slots:
+        Q_SCRIPTABLE void horizontal_split_current_terminal();
+        Q_SCRIPTABLE void vertical_split_current_terminal();
+
         Q_SCRIPTABLE int addSession(Session::SessionType type = Session::Single);
         Q_SCRIPTABLE int addSessionTwoHorizontal();
         Q_SCRIPTABLE int addSessionTwoVertical();
