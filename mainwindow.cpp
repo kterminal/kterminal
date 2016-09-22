@@ -32,26 +32,12 @@ MainWindow::MainWindow(QWidget *parent) : KMainWindow(parent) {
     //this->resize(700, 340);
     this->resize(1300, 840);
 
-    /*
-    Session* session = new Session(Session::Single, this);
-    */
 
-    /*
-    QSplitter *splitter = new QSplitter(this);
-    splitter->resize(600, 600);
-    QPushButton *m_button = new QPushButton("1");
-    QPushButton *m_button2 = new QPushButton("2");
-    splitter->addWidget(m_button);
-    splitter->addWidget(m_button2);
-    */
-    //QPushButton *m_button = new QPushButton("1", this);
-    //m_button->resize(600, 600);
+    m_split_left_shortcut = new QShortcut(QKeySequence("Ctrl+)"), this);
+    QObject::connect(m_split_left_shortcut, SIGNAL(activated()), this, SLOT(mySplitLeftRight()));
 
-    QShortcut *shortcut = new QShortcut(QKeySequence("Ctrl+)"), this);
-    QObject::connect(shortcut, SIGNAL(activated()), this, SLOT(mySplitLeftRight()));
-
-    shortcut = new QShortcut(QKeySequence("Ctrl+("), this);
-    QObject::connect(shortcut, SIGNAL(activated()), this, SLOT(mySplitTopBottom()));
+    m_split_right_shortcut = new QShortcut(QKeySequence("Ctrl+("), this);
+    QObject::connect(m_split_right_shortcut, SIGNAL(activated()), this, SLOT(mySplitTopBottom()));
 
 }
 
