@@ -49,7 +49,7 @@ class SessionStack : public QStackedWidget
         Q_SCRIPTABLE int addSessionQuad();
 
         Q_SCRIPTABLE void raiseSession(int sessionId);
-
+        Q_SCRIPTABLE void shutdown();
         Q_SCRIPTABLE void removeSession(int sessionId);
         Q_SCRIPTABLE void removeTerminal(int terminalId);
 

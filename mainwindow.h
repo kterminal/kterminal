@@ -40,7 +40,6 @@ class MainWindow : public KMainWindow {
         QGridLayout *gridLayout;
         QShortcut *m_split_left_shortcut;
         QShortcut *m_split_right_shortcut;
-        Session *m_session;
 };
 
 #endif
