@@ -174,13 +174,28 @@ Terminal* Session::addTerminal(QWidget* parent)
     return terminal;
 }
 
-void Session::closeTerminal(int terminalId)
+void Session::shutdown() {
+  while(!m_terminals.empty()) {
+    if (closable()) {
+      int id = closeTerminal();
+      std::cout << "Shutting down terminal " << id << "\n";
+      if (id != -1) cleanup(id);
+    } else {
+      return;
+    }
+  }
+  std::cout << "Prepare Session for shutdown\n";
+  prepareShutdown();
+}
+
+int Session::closeTerminal(int terminalId)
 {
     if (terminalId == -1) terminalId = m_activeTerminalId;
-    if (terminalId == -1) return;
-    if (!m_terminals.contains(terminalId)) return;
+    if (terminalId == -1) return -1;
+    if (!m_terminals.contains(terminalId)) return -1;
 
     m_terminals.value(terminalId)->deletePart();
+    return terminalId;
 }
 
 void Session::focusPreviousTerminal()

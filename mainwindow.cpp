@@ -1,4 +1,3 @@
-#include <iostream>
 #include "mainwindow.h"
 #include "sessionstack.h"
 
@@ -42,7 +41,13 @@ MainWindow::MainWindow(QWidget *parent) : KMainWindow(parent) {
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
-    qApp->exit();
+    m_sessionStack->shutdown();
+//     qApp->exit();
+    m_split_left_shortcut = m_split_right_shortcut = 0;
+    m_sessionStack = 0;
+    m_actionCollection = 0;
+    centralWidget = 0;
+    gridLayout = 0;
 }
 
 void MainWindow::handleTerminalActivity(Terminal *terminal) {
