@@ -53,7 +53,6 @@ int SessionStack::addSession(Session::SessionType type)
     ///connect(session, SIGNAL(keyboardInputBlocked(Terminal*)), m_visualEventOverlay, SLOT(indicateKeyboardInputBlocked(Terminal*)));
     connect(session, SIGNAL(activityDetected(Terminal*)), m_window, SLOT(handleTerminalActivity(Terminal*)));
     connect(session, SIGNAL(silenceDetected(Terminal*)), m_window, SLOT(handleTerminalSilence(Terminal*)));
-    connect(parentWidget(), SIGNAL(windowClosed()), session, SLOT(reconnectMonitorActivitySignals()));
     connect(session, SIGNAL(destroyed(int)), this, SLOT(cleanup(int)));
 
     addWidget(session->widget());
@@ -176,6 +175,8 @@ void SessionStack::cleanup(int sessionId)
     m_sessions.remove(sessionId);
 
     emit sessionRemoved(sessionId);
+    if (m_sessions.empty())
+      qApp->exit();
 }
 
 int SessionStack::activeTerminalId()
