@@ -36,7 +36,7 @@ Session::Session(SessionType type, QWidget* parent) : QObject(parent)
 
     m_closable = true;
 
-    m_baseSplitter = new Splitter(Qt::Horizontal, parent);
+    m_baseSplitter = new Splitter(Qt::Horizontal, this, parent);
     m_baseSplitter->resize(400, 300);
     connect(m_baseSplitter, SIGNAL(destroyed()), this, SLOT(prepareShutdown()));
 
@@ -115,10 +115,10 @@ void Session::setupSession(SessionType type)
 
             m_baseSplitter->setOrientation(Qt::Vertical);
 
-            Splitter* upperSplitter = new Splitter(Qt::Horizontal, m_baseSplitter);
+            Splitter* upperSplitter = new Splitter(Qt::Horizontal, this, m_baseSplitter);
             connect(upperSplitter, SIGNAL(destroyed()), this, SLOT(cleanup()));
 
-            Splitter* lowerSplitter = new Splitter(Qt::Horizontal, m_baseSplitter);
+            Splitter* lowerSplitter = new Splitter(Qt::Horizontal, this, m_baseSplitter);
             connect(lowerSplitter, SIGNAL(destroyed()), this, SLOT(cleanup()));
 
             Terminal* terminal = addTerminal(upperSplitter);
@@ -301,7 +301,7 @@ int Session::split(Terminal* terminal, Qt::Orientation orientation)
     {
         QList<int> splitterSizes = splitter->sizes();
 
-        Splitter* newSplitter = new Splitter(orientation, splitter);
+        Splitter* newSplitter = new Splitter(orientation, this, splitter);
         connect(newSplitter, SIGNAL(destroyed()), this, SLOT(cleanup()));
 
         if (splitter->indexOf(terminal->partWidget()) == 0)

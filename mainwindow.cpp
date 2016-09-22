@@ -1,4 +1,3 @@
-#include <iostream>
 #include "mainwindow.h"
 #include "sessionstack.h"
 
@@ -33,14 +32,16 @@ MainWindow::MainWindow(QWidget *parent) : KMainWindow(parent) {
     this->resize(1300, 840);
 
 
-    m_split_left_shortcut = new QShortcut(QKeySequence("Ctrl+)"), this);
-    QObject::connect(m_split_left_shortcut, SIGNAL(activated()), this, SLOT(mySplitLeftRight()));
+    m_split_horizontal_shortcut = new QShortcut(QKeySequence("Ctrl+'"), this);
+    QObject::connect(m_split_horizontal_shortcut, SIGNAL(activated()),
+                     m_sessionStack, SLOT(horizontal_split_current_terminal()));
 
-    m_split_right_shortcut = new QShortcut(QKeySequence("Ctrl+("), this);
-    QObject::connect(m_split_right_shortcut, SIGNAL(activated()), this, SLOT(mySplitTopBottom()));
+    m_split_vertical_shortcut = new QShortcut(QKeySequence("Ctrl+;"), this);
+    QObject::connect(m_split_vertical_shortcut, SIGNAL(activated()),
+                     m_sessionStack, SLOT(vertical_split_current_terminal()));
 
-    QShortcut *s = new QShortcut(QKeySequence("Ctrl+t"), this);
-    QObject::connect(s, SIGNAL(activated()), m_sessionStack, SLOT(addSession()));
+    QShortcut *m_new_tab_shortcut = new QShortcut(QKeySequence("Ctrl+t"), this);
+    QObject::connect(m_new_tab_shortcut, SIGNAL(activated()), m_sessionStack, SLOT(addSession()));
 }
 
 
@@ -49,12 +50,4 @@ void MainWindow::handleTerminalActivity(Terminal *terminal) {
 }
 
 void MainWindow::handleTerminalSilence(Terminal *terminal) {
-}
-void MainWindow::mySplitTopBottom() {
-    std::cout << "mySplitTopBottom" << std::endl;
-    m_sessionStack->splitSessionTopBottom(0);
-}
-void MainWindow::mySplitLeftRight() {
-    std::cout << "mySplitLeftRight" << std::endl;
-    m_sessionStack->splitSessionLeftRight(0);
 }

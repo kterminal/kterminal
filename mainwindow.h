@@ -24,8 +24,6 @@ class MainWindow : public KMainWindow {
     public slots:
         void handleTerminalActivity(Terminal* terminal);
         void handleTerminalSilence(Terminal* terminal);
-        void mySplitTopBottom();
-        void mySplitLeftRight();
 
     signals:
         void windowClosed();
@@ -35,8 +33,9 @@ class MainWindow : public KMainWindow {
         KActionCollection* m_actionCollection;
         QWidget *centralWidget;
         QGridLayout *gridLayout;
-        QShortcut *m_split_left_shortcut;
-        QShortcut *m_split_right_shortcut;
+        QShortcut *m_split_horizontal_shortcut;
+        QShortcut *m_split_vertical_shortcut;
+        QShortcut *m_new_tab_shortcut;
         Session *m_session;
 };
 

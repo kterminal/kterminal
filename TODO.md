@@ -15,9 +15,11 @@ Kommand
 - decide on better shortcuts
 - save window size on quit
 - set app icon
-- implement tabs
-   - split only happens on first tab
-   - tab should auto rename using regular conventions
+- bugs with tabs
+  - auto select new tab on create
+  - auto select a terminal on tab close
+- tabs visuals
+   - tab label should auto rename using regular conventions
       - folder, running process, escape function
    - tab rename by double click
    - icons on tabs?

@@ -42,6 +42,18 @@ SessionStack::~SessionStack()
 {
 }
 
+void SessionStack::horizontal_split_current_terminal() {
+  Splitter *current_spliter = (Splitter*)currentWidget();
+  std::cout << "Split current terminal horizontally (TopBottom)" << std::endl;
+  current_spliter->session()->splitTopBottom();
+}
+
+void SessionStack::vertical_split_current_terminal() {
+  Splitter *current_spliter = (Splitter*)currentWidget();
+  std::cout << "Split current terminal vertically (LeftRight)" << std::endl;
+  current_spliter->session()->splitLeftRight();
+}
+
 int SessionStack::addSession(Session::SessionType type)
 {
     Session* session = new Session(type, this);

@@ -23,7 +23,6 @@
 #ifndef SESSIONSTACK_H
 #define SESSIONSTACK_H
 
-
 #include "session.h"
 
 
@@ -43,6 +42,9 @@ class SessionStack : public QTabWidget
         ~SessionStack();
 
     public slots:
+        Q_SCRIPTABLE void horizontal_split_current_terminal();
+        Q_SCRIPTABLE void vertical_split_current_terminal();
+
         Q_SCRIPTABLE int addSession(Session::SessionType type = Session::Single);
         Q_SCRIPTABLE int addSessionTwoHorizontal();
         Q_SCRIPTABLE int addSessionTwoVertical();
