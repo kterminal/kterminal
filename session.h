@@ -49,7 +49,6 @@ class Session : public QObject
         QWidget* widget() { return m_baseSplitter; }
 
         int activeTerminalId() { return m_activeTerminalId; }
-        const QString terminalIdList();
         int terminalCount() { return m_terminals.count(); }
         bool hasTerminal(int terminalId);
         Terminal* getTerminal(int terminalId);

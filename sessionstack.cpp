@@ -158,42 +158,6 @@ int SessionStack::activeTerminalId()
     return m_sessions.value(m_activeSessionId)->activeTerminalId();
 }
 
-const QString SessionStack::sessionIdList()
-{
-    QList<int> keyList = m_sessions.uniqueKeys();
-    QStringList idList;
-
-    QListIterator<int> i(keyList);
-
-    while (i.hasNext())
-        idList << QString::number(i.next());
-
-    return idList.join(",");
-}
-
-const QString SessionStack::terminalIdList()
-{
-    QStringList idList;
-
-    QHashIterator<int, Session*> it(m_sessions);
-
-    while (it.hasNext())
-    {
-        it.next();
-
-        idList << it.value()->terminalIdList();
-    }
-
-    return idList.join(",");
-}
-
-const QString SessionStack::terminalIdsForSessionId(int sessionId)
-{
-    if (!m_sessions.contains(sessionId)) return QString::number(-1);
-
-    return m_sessions.value(sessionId)->terminalIdList();
-}
-
 int SessionStack::sessionIdForTerminalId(int terminalId)
 {
     int sessionId = -1;
