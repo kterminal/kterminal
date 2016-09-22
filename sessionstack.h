@@ -37,7 +37,7 @@ class Session;
 class SessionStack : public QStackedWidget
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "org.kde.yakuake")
+    Q_CLASSINFO("D-Bus Interface", "org.kde.konsplit")
 
     public:
         explicit SessionStack(QWidget* parent, QWidget* window);
