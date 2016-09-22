@@ -30,7 +30,7 @@
 #include <QtDBus/QtDBus>
 
 
-SessionStack::SessionStack(QWidget* parent, QWidget *window) : QStackedWidget(parent)
+SessionStack::SessionStack(QWidget* parent, QWidget *window) : QTabWidget(parent)
 {
     m_window = window;
     QDBusConnection::sessionBus().registerObject("/konsplit/sessions", this, QDBusConnection::ExportScriptableSlots);
@@ -51,7 +51,7 @@ int SessionStack::addSession(Session::SessionType type)
     connect(session, SIGNAL(silenceDetected(Terminal*)), m_window, SLOT(handleTerminalSilence(Terminal*)));
     connect(session, SIGNAL(destroyed(int)), this, SLOT(cleanup(int)));
 
-    addWidget(session->widget());
+    addTab(session->widget(), tr("Shell"));
 
     m_sessions.insert(session->id(), session);
 
