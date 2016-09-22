@@ -38,6 +38,8 @@ MainWindow::MainWindow(QWidget *parent) : KMainWindow(parent) {
     m_split_right_shortcut = new QShortcut(QKeySequence("Ctrl+("), this);
     QObject::connect(m_split_right_shortcut, SIGNAL(activated()), this, SLOT(mySplitTopBottom()));
 
+    QShortcut *s = new QShortcut(QKeySequence("Ctrl+t"), this);
+    QObject::connect(s, SIGNAL(activated()), m_sessionStack, SLOT(addSession()));
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
