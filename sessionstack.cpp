@@ -30,8 +30,9 @@
 #include <QtDBus/QtDBus>
 
 
-SessionStack::SessionStack(QWidget* parent) : QStackedWidget(parent)
+SessionStack::SessionStack(QWidget* parent, QWidget *window) : QStackedWidget(parent)
 {
+    m_window = window;
     QDBusConnection::sessionBus().registerObject("/yakuake/sessions", this, QDBusConnection::ExportScriptableSlots);
 
     m_activeSessionId = -1;
@@ -46,13 +47,12 @@ SessionStack::~SessionStack()
 
 int SessionStack::addSession(Session::SessionType type)
 {
-    this->resize(800,600);
     Session* session = new Session(type, this);
     connect(session, SIGNAL(titleChanged(int,QString)), this, SIGNAL(titleChanged(int,QString)));
     connect(session, SIGNAL(terminalManuallyActivated(Terminal*)), this, SLOT(handleManualTerminalActivation(Terminal*)));
     ///connect(session, SIGNAL(keyboardInputBlocked(Terminal*)), m_visualEventOverlay, SLOT(indicateKeyboardInputBlocked(Terminal*)));
-    connect(session, SIGNAL(activityDetected(Terminal*)), parentWidget(), SLOT(handleTerminalActivity(Terminal*)));
-    connect(session, SIGNAL(silenceDetected(Terminal*)), parentWidget(), SLOT(handleTerminalSilence(Terminal*)));
+    connect(session, SIGNAL(activityDetected(Terminal*)), m_window, SLOT(handleTerminalActivity(Terminal*)));
+    connect(session, SIGNAL(silenceDetected(Terminal*)), m_window, SLOT(handleTerminalSilence(Terminal*)));
     connect(parentWidget(), SIGNAL(windowClosed()), session, SLOT(reconnectMonitorActivitySignals()));
     connect(session, SIGNAL(destroyed(int)), this, SLOT(cleanup(int)));
 

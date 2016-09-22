@@ -87,8 +87,6 @@ Terminal::Terminal(QWidget* parent) : QObject(parent)
         disableOffendingPartActions();
 
         m_terminalInterface = qobject_cast<TerminalInterface*>(m_part);
-        //if (m_terminalInterface) m_terminalInterface->showShellInDir(KUser().homeDir());
-        if (m_terminalInterface) m_terminalInterface->showShellInDir("/home/xliiv");
     }
     else
         displayKPartLoadError();

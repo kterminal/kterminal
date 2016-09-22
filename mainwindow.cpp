@@ -8,9 +8,29 @@ class SessionStack;
 
 
 MainWindow::MainWindow(QWidget *parent) : KMainWindow(parent) {
-    this->resize(1024, 640);
-    m_sessionStack = new SessionStack(this);
+
+    const char *app_name = "Konsplit";
+    this->setWindowTitle(QApplication::translate(app_name, app_name, 0));
+    if (this->objectName().isEmpty()) {
+        this->setObjectName(app_name);
+    }
+
+    centralWidget = new QWidget(this);
+    centralWidget->setObjectName(QStringLiteral("centralWidget"));
+
+    m_sessionStack = new SessionStack(centralWidget, this);
     m_sessionStack->addSession();
+
+    gridLayout = new QGridLayout(centralWidget);
+    gridLayout->setSpacing(6);
+    gridLayout->setContentsMargins(1, 1, 1, 1);
+    gridLayout->setObjectName(QStringLiteral("gridLayout"));
+    this->setCentralWidget(centralWidget);
+
+    gridLayout->addWidget(m_sessionStack);
+
+    //this->resize(700, 340);
+    this->resize(1300, 840);
 
     /*
     Session* session = new Session(Session::Single, this);
