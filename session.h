@@ -23,7 +23,7 @@
 #ifndef SESSION_H
 #define SESSION_H
 
-
+#include <iostream>
 #include "splitter.h"
 
 #include <QMap>
@@ -79,7 +79,8 @@ class Session : public QObject
 
 
     public slots:
-        void closeTerminal(int terminalId = -1);
+        void shutdown();
+        int closeTerminal(int terminalId = -1);
 
         void focusNextTerminal();
         void focusPreviousTerminal();

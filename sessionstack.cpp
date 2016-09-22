@@ -132,6 +132,18 @@ void SessionStack::raiseSession(int sessionId)
     emit activeTitleChanged(session->title());
 }
 
+void SessionStack::shutdown() {
+    QHashIterator<int, Session*> i(m_sessions);
+    while (i.hasNext()) {
+        i.next();
+        std::cout << "Shutting down session " << i.key() << "\n";
+        i.value()->shutdown();
+        std::cout << "Cleaning up after session shutdown " << i.key() << "\n";
+        //cleanup(i.key());
+    }
+    m_window = 0;
+}
+
 void SessionStack::removeSession(int sessionId)
 {
     if (sessionId == -1) sessionId = m_activeSessionId;
