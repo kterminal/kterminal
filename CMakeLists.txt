@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(testproject)
 
-
+set(CMAKE_BUILD_TYPE Debug)
 
 
 # https://www.guyrutenberg.com/2014/01/05/enabling-c11-c0x-in-cmake/

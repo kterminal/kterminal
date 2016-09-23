@@ -40,18 +40,24 @@ MainWindow::MainWindow(QWidget *parent) : KMainWindow(parent) {
     QObject::connect(m_split_vertical_shortcut, SIGNAL(activated()),
                      m_sessionStack, SLOT(vertical_split_current_terminal()));
 
-    QShortcut *m_new_tab_shortcut = new QShortcut(QKeySequence("Ctrl+t"), this);
+    m_new_tab_shortcut = new QShortcut(QKeySequence("Ctrl+t"), this);
     QObject::connect(m_new_tab_shortcut, SIGNAL(activated()), m_sessionStack, SLOT(addSession()));
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
     m_sessionStack->shutdown();
-//     qApp->exit();
-    m_split_left_shortcut = m_split_right_shortcut = 0;
-    m_sessionStack = 0;
-    m_actionCollection = 0;
-    centralWidget = 0;
-    gridLayout = 0;
+    delete m_split_horizontal_shortcut;
+    delete m_split_vertical_shortcut;
+    delete m_new_tab_shortcut;
+    delete gridLayout;
+    delete m_sessionStack;
+    delete centralWidget;
+    //     qApp->exit();
+}
+
+MainWindow::~MainWindow() {
+  //delete m_actionCollection;
+//   delete m_session;
 }
 
 void MainWindow::handleTerminalActivity(Terminal *terminal) {

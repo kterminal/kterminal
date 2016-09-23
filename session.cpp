@@ -174,18 +174,19 @@ Terminal* Session::addTerminal(QWidget* parent)
     return terminal;
 }
 
-void Session::shutdown() {
+bool Session::shutdown() {
   while(!m_terminals.empty()) {
     if (closable()) {
       int id = closeTerminal();
       std::cout << "Shutting down terminal " << id << "\n";
       if (id != -1) cleanup(id);
     } else {
-      return;
+      return false;
     }
   }
   std::cout << "Prepare Session for shutdown\n";
   prepareShutdown();
+  return true;
 }
 
 int Session::closeTerminal(int terminalId)

@@ -19,7 +19,8 @@ class MainWindow : public KMainWindow {
 
     public:
         explicit MainWindow(QWidget *parent = 0);
-        KActionCollection* actionCollection() { return m_actionCollection; }
+        ~MainWindow();
+        //KActionCollection* actionCollection() { return m_actionCollection; }
 
     public slots:
         void handleTerminalActivity(Terminal* terminal);
@@ -33,13 +34,13 @@ class MainWindow : public KMainWindow {
 
     private:
         SessionStack *m_sessionStack;
-        KActionCollection* m_actionCollection;
+        //KActionCollection* m_actionCollection;
         QWidget *centralWidget;
         QGridLayout *gridLayout;
         QShortcut *m_split_horizontal_shortcut;
         QShortcut *m_split_vertical_shortcut;
         QShortcut *m_new_tab_shortcut;
-        Session *m_session;
+        //Session *m_session;
 };
 
 #endif

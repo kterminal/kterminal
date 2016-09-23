@@ -79,7 +79,7 @@ class Session : public QObject
 
 
     public slots:
-        void shutdown();
+        bool shutdown();
         int closeTerminal(int terminalId = -1);
 
         void focusNextTerminal();

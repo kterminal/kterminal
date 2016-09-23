@@ -95,9 +95,12 @@ int SessionStack::addSessionQuad()
 
 void SessionStack::raiseSession(int sessionId)
 {
+
+  std::cout << "foo 1" << std::endl;
     if (sessionId == -1 || !m_sessions.contains(sessionId)) return;
     Session* session = m_sessions.value(sessionId);
 
+    std::cout << "foo 2" << std::endl;
     if (m_activeSessionId != -1 && m_sessions.contains(m_activeSessionId))
     {
         Session* oldActiveSession = m_sessions.value(m_activeSessionId);
@@ -112,36 +115,50 @@ void SessionStack::raiseSession(int sessionId)
         oldActiveSession->reconnectMonitorActivitySignals();
     }
 
+    std::cout << "foo 3" << std::endl;
     m_activeSessionId = sessionId;
 
     setCurrentWidget(session->widget());
 
-    if (session->widget()->focusWidget())
+    std::cout << "foo 4" << std::endl;
+    if (session->widget() && session->widget()->focusWidget())
         session->widget()->focusWidget()->setFocus();
 
+    std::cout << "foo 5" << std::endl;
     session->focusNextTerminal();
 
+    std::cout << "foo 6" << std::endl;
     connect(this, SIGNAL(closeTerminal()), session, SLOT(closeTerminal()));
     connect(this, SIGNAL(previousTerminal()), session, SLOT(focusPreviousTerminal()));
     connect(this, SIGNAL(nextTerminal()), session, SLOT(focusNextTerminal()));
     connect(this, SIGNAL(manageProfiles()), session, SLOT(manageProfiles()));
     connect(session, SIGNAL(titleChanged(QString)), this, SIGNAL(activeTitleChanged(QString)));
+    std::cout << "foo 7" << std::endl;
 
     emit sessionRaised(sessionId);
 
     emit activeTitleChanged(session->title());
 }
 
-void SessionStack::shutdown() {
-    QHashIterator<int, Session*> i(m_sessions);
-    while (i.hasNext()) {
-        i.next();
-        std::cout << "Shutting down session " << i.key() << "\n";
-        i.value()->shutdown();
-        std::cout << "Cleaning up after session shutdown " << i.key() << "\n";
-        //cleanup(i.key());
+bool SessionStack::shutdown() {
+    Session *session;
+    int id;
+
+    while (!m_sessions.empty()) {
+        session = m_sessions.values().last();
+        id = session->id();
+        std::cout << "Shutting down session " << id << "\n";
+        if (session->shutdown()) {
+            m_sessions.remove(id);
+            std::cout << "Cleaning up after session shutdown " << id << "\n";
+            std::cout << "Remaining " << m_sessions.size() << " sessions\n";
+            //cleanup(i.key());
+        } else {
+            return false;
+        }
     }
     m_window = 0;
+    return true;
 }
 
 void SessionStack::removeSession(int sessionId)
@@ -182,6 +199,16 @@ void SessionStack::cleanup(int sessionId)
     if (m_sessions.empty()) {
       qApp->exit();
     } else {
+          QList<int> keyList = m_sessions.uniqueKeys();
+          QStringList idList;
+
+          QListIterator<int> i(keyList);
+
+          while (i.hasNext())
+              idList << QString::number(i.next());
+
+          const QString ss = idList.join(",");
+          std::cout <<  "ddd" << qPrintable(ss) << std::endl;
       auto_select_last_session();
     }
 }

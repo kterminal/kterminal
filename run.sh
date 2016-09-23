@@ -3,5 +3,5 @@
 mkdir -p build
 cd build
 cmake ..
-make && ./konsplit
+make && gdb ./konsplit
 
