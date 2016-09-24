@@ -8,7 +8,7 @@ class SessionStack;
 
 MainWindow::MainWindow(QWidget *parent) : KMainWindow(parent) {
 
-    const char *app_name = "Konsplit";
+    const char *app_name = "kterminal";
     this->setWindowTitle(QApplication::translate(app_name, app_name, 0));
     if (this->objectName().isEmpty()) {
         this->setObjectName(app_name);

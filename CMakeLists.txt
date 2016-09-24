@@ -34,8 +34,8 @@ find_package(KF5XmlGui)
 find_package(KF5Service)
 find_package(KF5Parts)
 
-# Tell CMake to create the konsplit executable
-add_executable(konsplit
+# Tell CMake to create the kterminal executable
+add_executable(kterminal
     main.cpp
     mainwindow.cpp
     terminal.cpp
@@ -47,7 +47,7 @@ add_executable(konsplit
 
 # Use the Widgets module from Qt 5.
 target_link_libraries(
-    konsplit
+    kterminal
     Qt5::Core
     Qt5::Widgets
     KF5::CoreAddons

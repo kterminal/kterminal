@@ -163,10 +163,10 @@ void Terminal::displayKPartLoadError()
     label->setWordWrap(false);
     label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     label->setTextInteractionFlags(Qt::TextSelectableByMouse);
-    label->setText(i18nc("@info", "<application>Konsplit</application> was unable to load "
+    label->setText(i18nc("@info", "<application>kterminal</application> was unable to load "
                                  "the <application>Konsole</application> component.<nl/> "
                                  "A <application>Konsole</application> installation is "
-                                 "required to use Konsplit."));
+                                 "required to use kterminal."));
 
     QLabel* icon = new QLabel(widget);
     icon->setMargin(10);

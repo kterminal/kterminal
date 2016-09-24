@@ -32,7 +32,7 @@
 SessionStack::SessionStack(QWidget* parent, QWidget *window) : QTabWidget(parent)
 {
     m_window = window;
-    QDBusConnection::sessionBus().registerObject("/konsplit/sessions", this, QDBusConnection::ExportScriptableSlots);
+    QDBusConnection::sessionBus().registerObject("/kterminal/sessions", this, QDBusConnection::ExportScriptableSlots);
     setTabPosition(QTabWidget::South);
     m_activeSessionId = -1;
 }

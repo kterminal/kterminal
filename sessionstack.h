@@ -35,7 +35,7 @@ class Session;
 class SessionStack : public QTabWidget
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "org.kde.konsplit")
+    Q_CLASSINFO("D-Bus Interface", "org.kde.kterminal")
 
     public:
         explicit SessionStack(QWidget* parent, QWidget* window);
