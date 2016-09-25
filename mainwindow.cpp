@@ -31,6 +31,13 @@ MainWindow::MainWindow(QWidget *parent) : KMainWindow(parent) {
     //this->resize(700, 340);
     this->resize(1300, 840);
 
+    m_left_tab_shortcut = new QShortcut(QKeySequence("Shift+Left"), this);
+    QObject::connect(m_left_tab_shortcut, SIGNAL(activated()),
+                     m_sessionStack, SLOT(select_left_tab()));
+
+    m_right_tab_shortcut = new QShortcut(QKeySequence("Shift+Right"), this);
+    QObject::connect(m_right_tab_shortcut, SIGNAL(activated()),
+                     m_sessionStack, SLOT(select_right_tab()));
 
     m_split_horizontal_shortcut = new QShortcut(QKeySequence("Ctrl+'"), this);
     QObject::connect(m_split_horizontal_shortcut, SIGNAL(activated()),

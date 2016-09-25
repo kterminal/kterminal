@@ -55,6 +55,8 @@ class SessionStack : public QTabWidget
 
         Q_SCRIPTABLE void removeSession(int sessionId);
         Q_SCRIPTABLE void removeTerminal(int terminalId);
+        Q_SCRIPTABLE void select_left_tab();
+        Q_SCRIPTABLE void select_right_tab();
 
         Q_SCRIPTABLE int splitSessionLeftRight(int sessionId);
         Q_SCRIPTABLE int splitSessionTopBottom(int sessionId);

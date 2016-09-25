@@ -222,6 +222,24 @@ void SessionStack::runCommandInTerminal(int terminalId, const QString& command)
     }
 }
 
+void SessionStack::select_left_tab() {
+  int current = activeSessionId();
+  if (current == 0)
+    auto_select_last_session();
+  else
+    raiseSession(current - 1);
+}
+
+void SessionStack::select_right_tab() {
+  int current = activeSessionId();
+  Session *last = m_sessions.values().last();
+  if (current == last->id()) {
+    raiseSession(0);
+  } else {
+    raiseSession(current + 1);
+  }
+}
+
 int SessionStack::splitSessionLeftRight(int sessionId)
 {
     if (sessionId == -1) return -1;

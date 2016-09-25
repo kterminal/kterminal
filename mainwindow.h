@@ -33,6 +33,8 @@ class MainWindow : public KMainWindow {
         KActionCollection* m_actionCollection;
         QWidget *centralWidget;
         QGridLayout *gridLayout;
+        QShortcut *m_left_tab_shortcut;
+        QShortcut *m_right_tab_shortcut;
         QShortcut *m_split_horizontal_shortcut;
         QShortcut *m_split_vertical_shortcut;
         QShortcut *m_new_tab_shortcut;
