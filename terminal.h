@@ -23,6 +23,7 @@
 #define TERMINAL_H
 
 #include <KParts/Part>
+#include <QDir>
 
 
 class QKeyEvent;
