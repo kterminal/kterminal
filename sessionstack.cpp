@@ -21,13 +21,11 @@
 
 
 #include "sessionstack.h"
-//#include "settings.h"
-
 #include <KMessageBox>
-#include <KLocalizedString>
-
+//#include <KLocalizedString>
+#include <QMessageBox>
 #include <QtDBus/QtDBus>
-
+#include <QInputDialog>
 
 SessionStack::SessionStack(QWidget* parent, QWidget *window) : QTabWidget(parent)
 {
@@ -59,23 +57,47 @@ void SessionStack::auto_select_last_session() {
 
 int SessionStack::addSession(Session::SessionType type)
 {
+  int sessionId = -1;
+  int tabIndex = -1;
+  
     Session* session = new Session(type, this);
+    sessionId = session->id();
     connect(session, SIGNAL(titleChanged(int,QString)), this, SIGNAL(titleChanged(int,QString)));
     connect(session, SIGNAL(terminalManuallyActivated(Terminal*)), this, SLOT(handleManualTerminalActivation(Terminal*)));
     connect(session, SIGNAL(activityDetected(Terminal*)), m_window, SLOT(handleTerminalActivity(Terminal*)));
     connect(session, SIGNAL(silenceDetected(Terminal*)), m_window, SLOT(handleTerminalSilence(Terminal*)));
     connect(session, SIGNAL(destroyed(int)), this, SLOT(cleanup(int)));
 
-    m_sessions.insert(session->id(), session);
+    m_sessions.insert(sessionId, session);
 
-    QString tab_label = QString("Shell (") + QString::number(session->id(), 16) + ")";
-    addTab(session->widget(), tab_label);
+    QString tab_label = QString("Shell (") + QString::number(sessionId, 16) + ")";
+    tabIndex = addTab(session->widget(), tr(qPrintable(tab_label)));
 
-    emit sessionAdded(session->id());
+    emit sessionAdded(sessionId);
 
-    raiseSession(session->id());
+    raiseSession(sessionId);
+    
+    qDebug() << "con:" << connect(this, SIGNAL(tabBarDoubleClicked(int)),this, SLOT(editTabLabel(int)));
 
-    return session->id();
+    return sessionId;   
+}
+
+void SessionStack::editTabLabel(int tabIndex)
+{
+    bool ok;
+    qDebug() << "editTabLabel! " << tabIndex;
+  
+    if (tabIndex < 0)
+        return;
+    
+    QString text = QInputDialog::getText(this,tr("QInputDialog::getText()"),
+					this->tabText(tabIndex), QLineEdit::Normal,
+					this->tabText(tabIndex),&ok);
+    
+    if(ok && !text.isEmpty()) {
+        this->setTabText(tabIndex,text);
+        return;
+    }
 }
 
 int SessionStack::addSessionTwoHorizontal()
@@ -342,6 +364,5 @@ void SessionStack::handleManualTerminalActivation(Terminal* terminal)
 ///        if (result != KMessageBox::Continue)
 ///            return false;
 ///    }
-///
-///    return true;
-///}
+/*
+  Copyright (C) 2008-2009 by Eike Hein <hein@kde.org> */

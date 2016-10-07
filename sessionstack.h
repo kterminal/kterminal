@@ -75,6 +75,7 @@ class SessionStack : public QTabWidget
 
         Q_SCRIPTABLE void runCommand(const QString& command);
         Q_SCRIPTABLE void runCommandInTerminal(int terminalId, const QString& command);
+	
 
 
     signals:
@@ -97,6 +98,9 @@ class SessionStack : public QTabWidget
 
     private slots:
         void handleManualTerminalActivation(Terminal*);
+	void editTabLabel(int tabIndex);
+	
+	
 
         void cleanup(int sessionId);
 
@@ -105,6 +109,7 @@ class SessionStack : public QTabWidget
         int m_activeSessionId;
         QWidget *m_window;
         QHash<int, Session*> m_sessions;
+	
 };
 
 #endif
