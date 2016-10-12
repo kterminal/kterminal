@@ -109,6 +109,7 @@ class SessionStack : public QTabWidget
         int m_activeSessionId;
         QWidget *m_window;
         QHash<int, Session*> m_sessions;
+        QString m_OrigText;
 	
 };
 

@@ -77,7 +77,7 @@ int SessionStack::addSession(Session::SessionType type)
 
     raiseSession(sessionId);
     
-    qDebug() << "con:" << connect(this, SIGNAL(tabBarDoubleClicked(int)),this, SLOT(editTabLabel(int)));
+    qDebug() << "con:" << connect(this, SIGNAL(tabBarDoubleClicked(int)),this, SLOT(editTabLabel(int)),Qt::UniqueConnection);
 
     return sessionId;   
 }
@@ -85,7 +85,6 @@ int SessionStack::addSession(Session::SessionType type)
 void SessionStack::editTabLabel(int tabIndex)
 {
     bool ok;
-    qDebug() << "editTabLabel! " << tabIndex;
   
     if (tabIndex < 0)
         return;
