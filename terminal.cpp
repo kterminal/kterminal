@@ -63,7 +63,6 @@ Terminal::Terminal(QWidget* parent) : QObject(parent)
     if( service )
     {
         factory = KPluginLoader(service->library()).factory();
-    }
 
     m_part = factory ? (factory->create<KParts::Part>(parent)) : 0;
 
@@ -90,6 +89,7 @@ Terminal::Terminal(QWidget* parent) : QObject(parent)
     }
     else
         displayKPartLoadError();
+    }
 }
 
 Terminal::~Terminal()

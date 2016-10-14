@@ -124,15 +124,18 @@ void MainWindow::createShortcuts()
 void MainWindow::createMenuActions()
 {
     newTabAct = new QAction(tr("&New Tab"), this);
+    newTabAct->setShortcut(QKeySequence(tr("Ctrl+T")));
     connect(newTabAct, SIGNAL(triggered()), m_sessionStack, SLOT(addSession()));
     
     closeTabAct = new QAction(tr("&Close Tab"), this);
     connect(closeTabAct, SIGNAL(triggered(bool)), m_sessionStack, SLOT(removeSession(-1))); // TODO: reggler 10/08/2016: this doesn't work yet
     
     splitVAct = new QAction(tr("Split &vertically"), this);
+    splitVAct->setShortcut(QKeySequence(tr("Ctrl+'")));
     connect(splitVAct, SIGNAL(triggered()), m_sessionStack, SLOT(vertical_split_current_terminal()));
     
     splitHAct = new QAction(tr("Split &horizontally"), this);
+    splitHAct->setShortcut(QKeySequence(tr("Ctrl+;")));
     connect(splitHAct, SIGNAL(triggered()), m_sessionStack, SLOT(horizontal_split_current_terminal()));
     
     quitAct = new QAction(tr("&Quit"), this);
