@@ -169,15 +169,15 @@ Terminal* Session::addTerminal(QWidget* parent)
 
     m_terminals.insert(terminal->id(), terminal);    
     
-    //QGroupBox *groupBox = new QGroupBox(tr("Test"));
+    QGroupBox *groupBox = new QGroupBox(tr("Test"), parent);
+    groupBox->setAlignment(Qt::AlignLeft);
     QWidget* terminalWidget = terminal->terminalWidget();
-    /*QVBoxLayout *vbox = new QVBoxLayout;
+    QVBoxLayout *vbox = new QVBoxLayout;
     vbox->addWidget(terminalWidget);
-    vbox->addStretch(1);
     groupBox->setLayout(vbox);
-    terminalWidget ->resize(100,100);
-    terminalWidget ->show();    */
-    if (terminalWidget/*groupBox*/) terminalWidget/*groupBox*/->setFocus();
+    terminalWidget ->show();
+    if (/*terminalWidget*/groupBox) /*terminalWidget*/groupBox->setFocus();
+    groupBox->show();
 
     return terminal;
 }
