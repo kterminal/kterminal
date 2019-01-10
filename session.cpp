@@ -19,7 +19,8 @@
   along with this program. If not, see http://www.gnu.org/licenses/.
 */
 
-
+#include <QVBoxLayout>
+#include <QGroupBox>
 #include <QDebug>
 #include "session.h"
 #include "terminal.h"
@@ -166,10 +167,17 @@ Terminal* Session::addTerminal(QWidget* parent)
     connect(terminal, SIGNAL(silenceDetected(Terminal*)), this, SIGNAL(silenceDetected(Terminal*)));
     connect(terminal, SIGNAL(destroyed(int)), this, SLOT(cleanup(int)));
 
-    m_terminals.insert(terminal->id(), terminal);
-
+    m_terminals.insert(terminal->id(), terminal);    
+    
+    //QGroupBox *groupBox = new QGroupBox(tr("Test"));
     QWidget* terminalWidget = terminal->terminalWidget();
-    if (terminalWidget) terminalWidget->setFocus();
+    /*QVBoxLayout *vbox = new QVBoxLayout;
+    vbox->addWidget(terminalWidget);
+    vbox->addStretch(1);
+    groupBox->setLayout(vbox);
+    terminalWidget ->resize(100,100);
+    terminalWidget ->show();    */
+    if (terminalWidget/*groupBox*/) terminalWidget/*groupBox*/->setFocus();
 
     return terminal;
 }
