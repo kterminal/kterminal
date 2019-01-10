@@ -100,23 +100,23 @@ void MainWindow::handleTerminalSilence(Terminal *terminal) {
 
 void MainWindow::createShortcuts()
 {
-      m_left_tab_shortcut = new QShortcut(QKeySequence("Shift+Left"), this);
+      m_left_tab_shortcut = new QShortcut(QKeySequence("Ctrl+PgUp"), this);
     QObject::connect(m_left_tab_shortcut, SIGNAL(activated()),
                      m_sessionStack, SLOT(select_left_tab()));
 
-    m_right_tab_shortcut = new QShortcut(QKeySequence("Shift+Right"), this);
+    m_right_tab_shortcut = new QShortcut(QKeySequence("Ctrl+PgDown"), this);
     QObject::connect(m_right_tab_shortcut, SIGNAL(activated()),
                      m_sessionStack, SLOT(select_right_tab()));
 
-    m_split_horizontal_shortcut = new QShortcut(QKeySequence("Ctrl+'"), this);
+    m_split_horizontal_shortcut = new QShortcut(QKeySequence("Ctrl+\\"), this);
     QObject::connect(m_split_horizontal_shortcut, SIGNAL(activated()),
                      m_sessionStack, SLOT(horizontal_split_current_terminal()));
 
-    m_split_vertical_shortcut = new QShortcut(QKeySequence("Ctrl+;"), this);
+    m_split_vertical_shortcut = new QShortcut(QKeySequence("Ctrl+|"), this);
     QObject::connect(m_split_vertical_shortcut, SIGNAL(activated()),
                      m_sessionStack, SLOT(vertical_split_current_terminal()));
 
-    QShortcut *m_new_tab_shortcut = new QShortcut(QKeySequence("Ctrl+t"), this);
+    QShortcut *m_new_tab_shortcut = new QShortcut(QKeySequence("Ctrl+Shift+t"), this);
     QObject::connect(m_new_tab_shortcut, SIGNAL(activated()), m_sessionStack, SLOT(addSession()));
 }
 
@@ -124,18 +124,15 @@ void MainWindow::createShortcuts()
 void MainWindow::createMenuActions()
 {
     newTabAct = new QAction(tr("&New Tab"), this);
-    newTabAct->setShortcut(QKeySequence(tr("Ctrl+T")));
     connect(newTabAct, SIGNAL(triggered()), m_sessionStack, SLOT(addSession()));
     
     closeTabAct = new QAction(tr("&Close Tab"), this);
     connect(closeTabAct, SIGNAL(triggered(bool)), m_sessionStack, SLOT(removeSession(-1))); // TODO: reggler 10/08/2016: this doesn't work yet
     
     splitVAct = new QAction(tr("Split &vertically"), this);
-    splitVAct->setShortcut(QKeySequence(tr("Ctrl+'")));
     connect(splitVAct, SIGNAL(triggered()), m_sessionStack, SLOT(vertical_split_current_terminal()));
     
     splitHAct = new QAction(tr("Split &horizontally"), this);
-    splitHAct->setShortcut(QKeySequence(tr("Ctrl+;")));
     connect(splitHAct, SIGNAL(triggered()), m_sessionStack, SLOT(horizontal_split_current_terminal()));
     
     quitAct = new QAction(tr("&Quit"), this);
