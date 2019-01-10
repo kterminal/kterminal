@@ -118,6 +118,9 @@ void MainWindow::createShortcuts()
 
     QShortcut *m_new_tab_shortcut = new QShortcut(QKeySequence("Ctrl+Shift+t"), this);
     QObject::connect(m_new_tab_shortcut, SIGNAL(activated()), m_sessionStack, SLOT(addSession()));
+
+    m_menu_toggle_shortcut = new QShortcut(QKeySequence("Ctrl+Shift+m"), this);
+    QObject::connect(m_menu_toggle_shortcut, SIGNAL(activated()), this, SLOT(menuToggle()));
 }
 
 
@@ -135,6 +138,9 @@ void MainWindow::createMenuActions()
     splitHAct = new QAction(tr("Split &horizontally"), this);
     connect(splitHAct, SIGNAL(triggered()), m_sessionStack, SLOT(horizontal_split_current_terminal()));
     
+    menuToggleAct = new QAction(tr("Show/hide menu"), this);
+    connect(menuToggleAct, SIGNAL(triggered()), this, SLOT(menuToggle()));
+
     quitAct = new QAction(tr("&Quit"), this);
     quitAct->setShortcuts(QKeySequence::Quit);
     quitAct->setText(tr("&Quit"));
@@ -159,6 +165,7 @@ void MainWindow::createMenus(void)
   viewMenu = menuBar()->addMenu(tr("&View"));
   viewMenu->addAction(splitHAct);
   viewMenu->addAction(splitVAct);
+  viewMenu->addAction(menuToggleAct);
   
   helpMenu = menuBar()->addMenu(tr("&Help"));
   helpMenu->addAction(aboutAct);
@@ -173,5 +180,10 @@ void MainWindow::aboutBox(void)
 void MainWindow::aboutQtBox(void)
 {
     QMessageBox::aboutQt(this, tr("About Qt"));
+}
+
+void MainWindow::menuToggle(void)
+{
+    menuBar()->setVisible(!menuBar()->isVisible());
 }
 

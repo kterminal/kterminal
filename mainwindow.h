@@ -45,6 +45,7 @@ class MainWindow : public KMainWindow {
         QShortcut *m_split_horizontal_shortcut;
         QShortcut *m_split_vertical_shortcut;
         QShortcut *m_new_tab_shortcut;
+        QShortcut *m_menu_toggle_shortcut;
         Session *m_session;
 	void readSettings();
 	void writeSettings();
@@ -55,6 +56,7 @@ class MainWindow : public KMainWindow {
 	QAction *newTabAct;
 	QAction *closeTabAct;
 	QAction *quitAct;
+	QAction *menuToggleAct;
 	QAction *splitVAct;
 	QAction *splitHAct;
 	QAction *aboutAct;
@@ -63,6 +65,7 @@ class MainWindow : public KMainWindow {
     private slots:
         void aboutQtBox();
         void aboutBox();
+        void menuToggle();
 };
 
 #endif
